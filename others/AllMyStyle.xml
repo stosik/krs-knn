@@ -1,0 +1,204 @@
+<code_scheme name="AllMyStyle" version="173">
+    <option name="OTHER_INDENT_OPTIONS">
+        <value>
+            <option name="CONTINUATION_INDENT_SIZE" value="4"/>
+        </value>
+    </option>
+    <option name="LINE_SEPARATOR" value="&#xD;&#xA;"/>
+    <option name="GENERATE_FINAL_LOCALS" value="true"/>
+    <option name="VISIBILITY" value="private"/>
+    <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="50"/>
+    <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="30"/>
+    <option name="RIGHT_MARGIN" value="200"/>
+    <option name="JD_ADD_BLANK_AFTER_PARM_COMMENTS" value="true"/>
+    <option name="JD_ADD_BLANK_AFTER_RETURN" value="true"/>
+    <CssCodeStyleSettings>
+        <option name="BRACE_PLACEMENT" value="1"/>
+    </CssCodeStyleSettings>
+    <GroovyCodeStyleSettings>
+        <option name="USE_FLYING_GEESE_BRACES" value="true"/>
+        <option name="USE_FQ_CLASS_NAMES_IN_JAVADOC" value="false"/>
+        <option name="INSERT_INNER_CLASS_IMPORTS" value="true"/>
+    </GroovyCodeStyleSettings>
+    <JavaCodeStyleSettings>
+        <option name="GENERATE_FINAL_LOCALS" value="true"/>
+        <option name="VISIBILITY" value="private"/>
+        <option name="DO_NOT_WRAP_AFTER_SINGLE_ANNOTATION" value="true"/>
+        <option name="ALIGN_MULTILINE_ANNOTATION_PARAMETERS" value="true"/>
+        <option name="CLASS_COUNT_TO_USE_IMPORT_ON_DEMAND" value="50"/>
+        <option name="NAMES_COUNT_TO_USE_IMPORT_ON_DEMAND" value="30"/>
+        <option name="JD_ADD_BLANK_AFTER_PARM_COMMENTS" value="true"/>
+        <option name="JD_ADD_BLANK_AFTER_RETURN" value="true"/>
+    </JavaCodeStyleSettings>
+    <JetCodeStyleSettings>
+        <option name="PACKAGES_TO_USE_STAR_IMPORTS">
+            <value>
+                <package name="java.util" withSubpackages="false" static="false"/>
+                <package name="kotlinx.android.synthetic" withSubpackages="true" static="false"/>
+                <package name="tornadofx" withSubpackages="false" static="false"/>
+            </value>
+        </option>
+        <option name="LBRACE_ON_NEXT_LINE" value="true"/>
+        <option name="NAME_COUNT_TO_USE_STAR_IMPORT" value="2147483647"/>
+        <option name="NAME_COUNT_TO_USE_STAR_IMPORT_FOR_MEMBERS" value="2147483647"/>
+    </JetCodeStyleSettings>
+    <ScalaCodeStyleSettings>
+        <option name="TYPE_ANNOTATION_PUBLIC_MEMBER" value="false"/>
+        <option name="TYPE_ANNOTATION_PROTECTED_MEMBER" value="false"/>
+        <option name="TYPE_ANNOTATION_IMPLICIT_MODIFIER" value="false"/>
+        <option name="TYPE_ANNOTATION_UNIT_TYPE" value="false"/>
+    </ScalaCodeStyleSettings>
+    <XML>
+        <option name="XML_ATTRIBUTE_WRAP" value="4"/>
+        <option name="XML_KEEP_BLANK_LINES" value="1"/>
+        <option name="XML_LEGACY_SETTINGS_IMPORTED" value="true"/>
+    </XML>
+    <codeStyleSettings language="ECMA Script Level 4">
+        <option name="BRACE_STYLE" value="2"/>
+        <option name="CLASS_BRACE_STYLE" value="2"/>
+        <option name="METHOD_BRACE_STYLE" value="2"/>
+    </codeStyleSettings>
+    <codeStyleSettings language="Groovy">
+        <option name="KEEP_LINE_BREAKS" value="false"/>
+        <option name="KEEP_FIRST_COLUMN_COMMENT" value="false"/>
+        <option name="KEEP_CONTROL_STATEMENT_IN_ONE_LINE" value="false"/>
+        <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1"/>
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="1"/>
+        <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="0"/>
+        <option name="BRACE_STYLE" value="2"/>
+        <option name="CLASS_BRACE_STYLE" value="2"/>
+        <option name="METHOD_BRACE_STYLE" value="2"/>
+        <option name="ELSE_ON_NEW_LINE" value="true"/>
+        <option name="CATCH_ON_NEW_LINE" value="true"/>
+        <option name="FINALLY_ON_NEW_LINE" value="true"/>
+        <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true"/>
+        <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true"/>
+        <option name="ALIGN_MULTILINE_METHOD_BRACKETS" value="true"/>
+        <option name="SPACE_BEFORE_IF_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_SYNCHRONIZED_PARENTHESES" value="false"/>
+        <option name="PREFER_PARAMETERS_WRAP" value="true"/>
+        <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="METHOD_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="METHOD_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="false"/>
+        <option name="KEEP_SIMPLE_CLASSES_IN_ONE_LINE" value="false"/>
+        <option name="FOR_STATEMENT_LPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="FOR_STATEMENT_RPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="IF_BRACE_FORCE" value="3"/>
+        <option name="WHILE_BRACE_FORCE" value="3"/>
+        <option name="FOR_BRACE_FORCE" value="3"/>
+        <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="4"/>
+        </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="JAVA">
+        <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1"/>
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="1"/>
+        <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1"/>
+        <option name="BRACE_STYLE" value="2"/>
+        <option name="CLASS_BRACE_STYLE" value="2"/>
+        <option name="METHOD_BRACE_STYLE" value="2"/>
+        <option name="ELSE_ON_NEW_LINE" value="true"/>
+        <option name="WHILE_ON_NEW_LINE" value="true"/>
+        <option name="CATCH_ON_NEW_LINE" value="true"/>
+        <option name="FINALLY_ON_NEW_LINE" value="true"/>
+        <option name="ALIGN_MULTILINE_CHAINED_METHODS" value="true"/>
+        <option name="ALIGN_MULTILINE_PARAMETERS" value="false"/>
+        <option name="ALIGN_MULTILINE_PARAMETERS_IN_CALLS" value="true"/>
+        <option name="ALIGN_MULTILINE_BINARY_OPERATION" value="true"/>
+        <option name="ALIGN_MULTILINE_ASSIGNMENT" value="true"/>
+        <option name="ALIGN_MULTILINE_TERNARY_OPERATION" value="true"/>
+        <option name="ALIGN_MULTILINE_THROWS_LIST" value="true"/>
+        <option name="ALIGN_THROWS_KEYWORD" value="true"/>
+        <option name="ALIGN_MULTILINE_EXTENDS_LIST" value="true"/>
+        <option name="ALIGN_MULTILINE_METHOD_BRACKETS" value="true"/>
+        <option name="ALIGN_MULTILINE_ARRAY_INITIALIZER_EXPRESSION" value="true"/>
+        <option name="SPACE_BEFORE_IF_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_TRY_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_CATCH_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_SWITCH_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_SYNCHRONIZED_PARENTHESES" value="false"/>
+        <option name="CALL_PARAMETERS_WRAP" value="5"/>
+        <option name="CALL_PARAMETERS_LPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="CALL_PARAMETERS_RPAREN_ON_NEXT_LINE" value="true"/>
+        <option name="METHOD_CALL_CHAIN_WRAP" value="5"/>
+        <option name="WRAP_FIRST_METHOD_IN_CALL_CHAIN" value="true"/>
+        <option name="IF_BRACE_FORCE" value="3"/>
+        <option name="DOWHILE_BRACE_FORCE" value="3"/>
+        <option name="WHILE_BRACE_FORCE" value="3"/>
+        <option name="FOR_BRACE_FORCE" value="3"/>
+        <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="4"/>
+            <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true"/>
+        </indentOptions>
+        <arrangement>
+            <groups>
+                <group>
+                    <type>GETTERS_AND_SETTERS</type>
+                    <order>KEEP</order>
+                </group>
+                <group>
+                    <type>DEPENDENT_METHODS</type>
+                    <order>BREADTH_FIRST</order>
+                </group>
+                <group>
+                    <type>OVERRIDDEN_METHODS</type>
+                    <order>KEEP</order>
+                </group>
+            </groups>
+        </arrangement>
+    </codeStyleSettings>
+    <codeStyleSettings language="JSON">
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="1"/>
+        <indentOptions>
+            <option name="INDENT_SIZE" value="4"/>
+            <option name="KEEP_INDENTS_ON_EMPTY_LINES" value="true"/>
+        </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="JavaScript">
+        <option name="BRACE_STYLE" value="2"/>
+        <option name="METHOD_BRACE_STYLE" value="2"/>
+    </codeStyleSettings>
+    <codeStyleSettings language="Scala">
+        <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1"/>
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="1"/>
+        <option name="KEEP_BLANK_LINES_BEFORE_RBRACE" value="1"/>
+        <option name="BRACE_STYLE" value="2"/>
+        <option name="CLASS_BRACE_STYLE" value="2"/>
+        <option name="METHOD_BRACE_STYLE" value="2"/>
+        <option name="SPACE_BEFORE_IF_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_WHILE_PARENTHESES" value="false"/>
+        <option name="SPACE_BEFORE_FOR_PARENTHESES" value="false"/>
+        <option name="KEEP_SIMPLE_BLOCKS_IN_ONE_LINE" value="true"/>
+        <option name="KEEP_SIMPLE_METHODS_IN_ONE_LINE" value="true"/>
+        <indentOptions>
+            <option name="INDENT_SIZE" value="4"/>
+            <option name="CONTINUATION_INDENT_SIZE" value="4"/>
+            <option name="TAB_SIZE" value="4"/>
+        </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="kotlin">
+        <option name="KEEP_BLANK_LINES_IN_DECLARATIONS" value="1"/>
+        <option name="KEEP_BLANK_LINES_IN_CODE" value="1"/>
+        <option name="ELSE_ON_NEW_LINE" value="true"/>
+        <option name="WHILE_ON_NEW_LINE" value="true"/>
+        <option name="CATCH_ON_NEW_LINE" value="true"/>
+        <option name="FINALLY_ON_NEW_LINE" value="true"/>
+        <indentOptions>
+            <option name="CONTINUATION_INDENT_SIZE" value="4"/>
+        </indentOptions>
+    </codeStyleSettings>
+    <codeStyleSettings language="yamlEx">
+        <indentOptions>
+            <option name="INDENT_SIZE" value="4"/>
+            <option name="TAB_SIZE" value="4"/>
+        </indentOptions>
+    </codeStyleSettings>
+</code_scheme>
