@@ -20,6 +20,38 @@ import java.util.Objects;
 public class SgmReader
 {
     
+    public void getData(File dir, String destination)
+    {
+        List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
+
+        for(File file : files)
+        {
+            Document sgm = readSgm(file);
+            org.dom4j.Document xml = createXmlBase();
+            
+            Elements elements = Objects.requireNonNull(sgm).select("REUTERS");
+            for(Element element : elements)
+            {
+                elementExplorer(element, xml.getRootElement());
+            }
+            
+            try
+            {
+                XMLWriter writer;
+                OutputFormat format = OutputFormat.createPrettyPrint();
+                format.setEncoding("UTF-8");
+                FileOutputStream fos = new FileOutputStream(destination + "/" + file.getName().substring(0, file.getName().lastIndexOf('.')) + ".xml");
+                writer = new XMLWriter(fos, format);
+                writer.write(xml);
+                writer.close();
+            }
+            catch(IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+    }
+    
     private static Document readSgm(File file)
     {
         try
@@ -59,37 +91,5 @@ public class SgmReader
         org.dom4j.Document document = DocumentHelper.createDocument();
         org.dom4j.Element root = document.addElement("root");
         return document;
-    }
-    
-    public void getData(File dir, String destination)
-    {
-        List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
-
-        for(File file : files)
-        {
-            Document sgm = readSgm(file);
-            org.dom4j.Document xml = createXmlBase();
-            
-            Elements elements = Objects.requireNonNull(sgm).select("REUTERS");
-            for(Element element : elements)
-            {
-                elementExplorer(element, xml.getRootElement());
-            }
-            
-            try
-            {
-                XMLWriter writer;
-                OutputFormat format = OutputFormat.createPrettyPrint();
-                format.setEncoding("UTF-8");
-                FileOutputStream fos = new FileOutputStream(destination + "/" + file.getName().substring(0, file.getName().lastIndexOf('.')) + ".xml");
-                writer = new XMLWriter(fos, format);
-                writer.write(xml);
-                writer.close();
-            }
-            catch(IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
     }
 }

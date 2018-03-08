@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-public class JsoapTests
+public class JsoupTest
 {
     
     private SgmReader xmlReader = new SgmReader();
@@ -64,7 +64,7 @@ public class JsoapTests
                 {
                     if(child instanceof Element && child.childNodeSize() == 1)
                     {
-
+                    
                     }
                     else if(child instanceof Element && child.childNodeSize() > 1)
                     {
