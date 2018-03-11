@@ -3,10 +3,18 @@
   <component name="CompilerConfiguration">
     <annotationProcessing>
       <profile default="true" name="Default" enabled="true" />
+      <profile name="Maven default annotation processors profile" enabled="true">
+        <sourceOutputDir name="target/generated-sources/annotations" />
+        <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
+        <outputRelativeToContentRoot value="true" />
+        <module name="gui" />
+        <module name="model" />
+      </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
-      <module name="krs_main" target="1.8" />
-      <module name="krs_test" target="1.8" />
+      <module name="gui" target="1.8" />
+      <module name="ksr" target="1.8" />
+      <module name="model" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

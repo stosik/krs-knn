@@ -2,9 +2,9 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/krs.iml" filepath="$PROJECT_DIR$/.idea/modules/krs.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/krs_main.iml" filepath="$PROJECT_DIR$/.idea/modules/krs_main.iml" group="krs" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/krs_test.iml" filepath="$PROJECT_DIR$/.idea/modules/krs_test.iml" group="krs" />
+      <module fileurl="file://$PROJECT_DIR$/gui/gui.iml" filepath="$PROJECT_DIR$/gui/gui.iml" />
+      <module fileurl="file://$PROJECT_DIR$/ksr.iml" filepath="$PROJECT_DIR$/ksr.iml" />
+      <module fileurl="file://$PROJECT_DIR$/model/model.iml" filepath="$PROJECT_DIR$/model/model.iml" />
     </modules>
   </component>
 </project>

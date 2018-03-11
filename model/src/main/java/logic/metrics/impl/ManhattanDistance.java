@@ -1,5 +1,6 @@
 package logic.metrics.impl;
 
+
 import logic.metrics.Distance;
 import logic.model.WordVector;
 

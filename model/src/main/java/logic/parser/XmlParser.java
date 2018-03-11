@@ -18,11 +18,11 @@ public class XmlParser
     public List<Article> parseDir(File dir)
     {
         List<Article> articlesList = new ArrayList<>();
-        List<File> files = Arrays.asList(dir.listFiles());
+        List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
         
         for(File file : files)
         {
-            articlesList.addAll(parse(file));
+            articlesList.addAll(Objects.requireNonNull(parse(file)));
         }
         return articlesList;
     }
@@ -96,7 +96,7 @@ public class XmlParser
         
         for(File f : files)
         {
-            articles.addAll(parse(f));
+            articles.addAll(Objects.requireNonNull(parse(f)));
         }
         
         return articles;
