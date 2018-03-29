@@ -1,13 +1,7 @@
 .classpath
 .project
 .settings/
-model/.classpath
-model/.project
-model/.settings/
 model/target/
-gui/.classpath
-gui/.project
-gui/.settings/
 gui/target/
 .iml
 .idea
