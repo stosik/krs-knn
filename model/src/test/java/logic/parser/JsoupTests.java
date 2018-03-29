@@ -42,7 +42,7 @@ public class JsoupTests
     @Test
     public void testSGMToXML()
     {
-        new SgmReader().getData(new File("./data/sgm"), "data/xml/");
+        new SgmReader().getData(new File("./data/text/sgm"), "./data/text/xml/");
     }
     
     @Test

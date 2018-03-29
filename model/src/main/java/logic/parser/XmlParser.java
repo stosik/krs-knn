@@ -67,18 +67,18 @@ public class XmlParser
         return articlesList;
     }
     
-    private List<String> getList(List<Element> elemlist)
+    private List<String> getList(List<Element> listOfElements)
     {
         List<String> list = new ArrayList<String>();
-        if(!elemlist.isEmpty())
+        if(!listOfElements.isEmpty())
         {
-            if((elemlist.get(0).elements("d").size() == 0))
+            if((listOfElements.get(0).elements("d").size() == 0))
             {
-                list.add(elemlist.get(0).getText());
+                list.add(listOfElements.get(0).getText());
             }
             else
             {
-                List<Element> dlist = elemlist.get(0).elements("d");
+                List<Element> dlist = listOfElements.get(0).elements("d");
                 for(Element e : dlist)
                 {
                     list.add(e.getText());

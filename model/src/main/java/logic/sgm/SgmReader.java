@@ -41,7 +41,7 @@ public class SgmReader
             if(child instanceof Element && (child.childNodeSize() == 1 || child.childNodeSize() == 0))
             {
                 org.dom4j.Element newXmlElement = xmlElement.addElement(((Element) child).tagName());
-                newXmlElement.addText(WordRemoval.removeInvalidWords1(((Element) child).text()));
+                newXmlElement.addText(WordRemoval.removeNumericCharacters(((Element) child).text()));
             }
             else if(child instanceof Element && child.childNodeSize() > 1)
             {
@@ -49,7 +49,7 @@ public class SgmReader
             }
             else if(child instanceof TextNode && ((Element) child.parent()).tagName().equalsIgnoreCase("TEXT") && !((TextNode) child).isBlank() && ((TextNode) child).text().length() > 11)
             {
-                xmlElement.addElement("body").addText(WordRemoval.removeInvalidWords1(WordRemoval.removeDefaultWords(((TextNode) child).text())));
+                xmlElement.addElement("body").addText(WordRemoval.removeNumericCharacters(WordRemoval.removeDefaultWords(((TextNode) child).text())));
             }
         }
     }
