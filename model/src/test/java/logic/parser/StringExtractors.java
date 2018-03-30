@@ -1,5 +1,6 @@
 package logic.parser;
 
+import logic.model.Article;
 import logic.utils.WordRemoval;
 import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.StopFilter;
@@ -11,7 +12,9 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.junit.Test;
 
+import java.io.File;
 import java.io.StringReader;
+import java.util.List;
 
 public class StringExtractors
 {
@@ -102,6 +105,21 @@ public class StringExtractors
     @Test
     public void removeNonAlphabetStrings()
     {
-        WordRemoval.removeNumericCharacters(ALPHANUMERIC);
+        System.out.println(WordRemoval.removeNumericCharacters(ALPHANUMERIC));
+    }
+    
+    @Test
+    public void removeAllStopWords()
+    {
+        System.out.println(WordRemoval.removeAllEnglishStopWords(BODY));
+    }
+    
+    @Test
+    public void parseToXmlAndExtractFromArticleOnlyMeaningfulWords()
+    {
+        XmlParser parser = new XmlParser();
+        File xmlDir = new File("data/text/xml");
+        List<Article> articles = parser.parseDir(xmlDir);
+        System.out.println(WordRemoval.removeAllEnglishStopWords(articles.get(0).getBody()));
     }
 }

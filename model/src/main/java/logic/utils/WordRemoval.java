@@ -18,6 +18,11 @@ public class WordRemoval
             "[ ](?:an|a|and|about|the|are|is|not|have|has|had|of|it|in|mln|said|for|will|its|with|from|that|was|would|which|this|last|REUTER)\\b\\.?",
             Pattern.CASE_INSENSITIVE
         );
+    private static final Pattern stopWordsToRemove = Pattern.compile
+        (
+            "[ ](?:" + String.join("|", readFromFileStopWords()) + ")\\b\\.?",
+            Pattern.CASE_INSENSITIVE
+        );
     private static final Pattern invalidWordsToRemove = Pattern.compile("([&]*[#]*[;]*[]*[]*)");
     private static final Pattern invalidOnlyCharacters = Pattern.compile("[^a-zA-Z\\s]");
     
@@ -33,10 +38,10 @@ public class WordRemoval
         return matcher.replaceAll(" ");
     }
     
-    public static String removeEnglishStopWords(String text)
+    public static String removeAllEnglishStopWords(String text)
     {
-        readFromFileStopWords().forEach(System.out::println);
-        return null;
+        Matcher matcher = stopWordsToRemove.matcher(text);
+        return matcher.replaceAll("");
     }
     
     private static List<String> readFromFileStopWords()
