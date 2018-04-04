@@ -17,7 +17,7 @@ import java.util.Map;
  */
 public class FreqListBuilder
 {
-    private static final int LENGHT_LIMIT = 2;
+    private static final int LENGTH_LIMIT = 2;
     
     public List<String> getWordList(List<Article> articles, int n, int opt)
     {
@@ -33,7 +33,7 @@ public class FreqListBuilder
         return wordList;
     }
     
-    private Map<String, Integer> getWordCount(List<Article> articles, int option)
+    public Map<String, Integer> getWordCount(List<Article> articles, int option)
     {
         Map<String, Integer> wordCount = new HashMap<>();
         for(Article art : articles)
@@ -90,7 +90,7 @@ public class FreqListBuilder
     {
         for(String word : words_table)
         {
-            if(word.length() > LENGHT_LIMIT)
+            if(word.length() > LENGTH_LIMIT)
             {
                 if(!wordCount.containsKey(word))
                 {
