@@ -10,4 +10,4 @@ gui/.project
 gui/.settings/
 gui/target/
 .iml
-.idea
+.idea/

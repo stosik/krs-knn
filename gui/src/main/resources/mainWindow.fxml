@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import com.jfoenix.controls.JFXButton?>
+<?import com.jfoenix.controls.JFXComboBox?>
+<?import com.jfoenix.controls.JFXToolbar?>
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TreeTableColumn?>
+<?import javafx.scene.control.TreeTableView?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="css/main.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainWindowController">
+   <left>
+      <HBox prefHeight="689.0" prefWidth="275.0" BorderPane.alignment="CENTER">
+         <children>
+            <TreeTableView prefHeight="689.0" prefWidth="267.0" HBox.hgrow="ALWAYS">
+              <columns>
+                <TreeTableColumn prefWidth="129.0" text="Word" />
+                <TreeTableColumn prefWidth="137.0" text="Occurrences" />
+              </columns>
+               <columnResizePolicy>
+                  <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
+               </columnResizePolicy>
+            </TreeTableView>
+         </children>
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </BorderPane.margin>
+      </HBox>
+   </left>
+   <bottom>
+      <HBox prefHeight="133.0" prefWidth="960.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" left="20.0" right="20.0" />
+         </BorderPane.margin>
+         <children>
+            <VBox prefHeight="100.0" prefWidth="275.0">
+               <HBox.margin>
+                  <Insets right="20.0" />
+               </HBox.margin>
+               <children>
+                  <Label prefHeight="25.0" prefWidth="115.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Statistics:" />
+                  <TextArea fx:id="statisticsArea" prefHeight="200.0" prefWidth="200.0" />
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="100.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
+               <children>
+                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="49.0" prefWidth="150.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Element:" />
+                        <JFXComboBox fx:id="elementCombo" onAction="#elementComboChanged" prefHeight="25.0" prefWidth="220.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="309.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="48.0" prefWidth="150.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Extraction type:" HBox.hgrow="ALWAYS" />
+                        <JFXComboBox fx:id="extractionTypeCombo" onAction="#extractionTypeComboChanged" prefHeight="25.0" prefWidth="220.0" />
+                     </children>
+                  </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="48.0" prefWidth="150.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Similarity measure:" HBox.hgrow="ALWAYS" />
+                        <JFXComboBox fx:id="similarityCombo" onAction="#similarityComboChanged" prefHeight="25.0" prefWidth="220.0" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox alignment="CENTER" prefHeight="133.0" prefWidth="173.0" HBox.hgrow="NEVER">
+               <children>
+                  <JFXButton fx:id="extractButton" buttonType="RAISED" onAction="#extractButtonClicked" ripplerFill="BLACK" styleClass="directory-button" stylesheets="@css/main.css" text="Extract" />
+               </children>
+            </VBox>
+         </children>
+      </HBox>
+   </bottom>
+   <center>
+      <TextArea fx:id="mainTextArea" prefHeight="200.0" prefWidth="200.0" BorderPane.alignment="CENTER">
+         <BorderPane.margin>
+            <Insets bottom="20.0" right="20.0" />
+         </BorderPane.margin>
+      </TextArea>
+   </center>
+   <top>
+      <VBox prefHeight="144.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
+         <children>
+             <VBox>
+                 <JFXToolbar prefHeight="30.0" prefWidth="1000.0" />
+             </VBox>
+            <HBox prefHeight="106.0" prefWidth="1015.0">
+               <children>
+                  <VBox alignment="CENTER" prefHeight="111.0" prefWidth="185.0">
+                     <children>
+                        <JFXButton fx:id="directoryButton" buttonType="RAISED" onAction="#directoryButtonClicked" ripplerFill="BLACK" styleClass="directory-button" stylesheets="@css/main.css" text="Choose directory">
+                           <VBox.margin>
+                              <Insets left="20.0" />
+                           </VBox.margin>
+                        </JFXButton>
+                     </children>
+                  </VBox>
+                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <Label contentDisplay="CENTER" styleClass="directory-label-main" stylesheets="@css/main.css" text="Directory:" />
+                     </children>
+                     <opaqueInsets>
+                        <Insets />
+                     </opaqueInsets>
+                  </VBox>
+                  <VBox alignment="CENTER_LEFT" prefHeight="111.0" prefWidth="328.0">
+                     <children>
+                        <Label fx:id="directoryLabel" stylesheets="@css/main.css">
+                           <padding>
+                              <Insets left="10.0" />
+                           </padding>
+                           <styleClass>
+                              <String fx:value="directory-label-main" />
+                              <String fx:value="directory-label-text" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+   </top>
+</BorderPane>
