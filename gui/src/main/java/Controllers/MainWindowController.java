@@ -2,15 +2,28 @@ package Controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 import general.AppState;
+import javafx.util.Pair;
+import logic.extractors.WordModel;
+import logic.extractors.processors.Processor;
+import logic.model.Article;
+import logic.parser.XmlParser;
 
 public class MainWindowController
 {
@@ -62,6 +75,21 @@ public class MainWindowController
     @FXML
     private JFXComboBox<String> similarityCombo;
     
+    /**
+     * word column
+     */
+    @FXML
+    private TableColumn wordColumn;
+    
+    /**
+     * occurences column
+     */
+    @FXML
+    private TableColumn occurencesColumn;
+    
+    @FXML
+    private TableView tableView;
+    
     private Stage stage;
     
     @FXML
@@ -69,6 +97,11 @@ public class MainWindowController
         this.stage = AppState.getInstance().getPrimaryStage();
         elementCombo.getItems().addAll(new String("Places"), new String("People"));
         elementCombo.setPromptText("Select element");
+        
+        wordColumn.setCellValueFactory(new PropertyValueFactory<WordModel, String>("word"));
+        occurencesColumn.setCellValueFactory(new PropertyValueFactory<WordModel, Integer>("occurences"));
+    
+        tableView.setItems(AppState.getInstance().getFreqList());
     }
     
     @FXML
@@ -80,10 +113,36 @@ public class MainWindowController
         {
             directoryLabel.getStyleClass().add("error");
             directoryLabel.setText("Select valid directory");
+            return;
         } else {
             directoryLabel.getStyleClass().remove("error");
             directoryLabel.setText(selectedDirectory.getPath());
         }
+    
+        XmlParser parser = new XmlParser();
+        File xmlDir = new File(selectedDirectory.getAbsolutePath());
+        AppState.getInstance().setArticles(parser.parseDir(xmlDir));
+        this.updateList();
+        this.updateStatistics();
+    }
+    
+    private List<WordModel> mapToPairList(Map<String, Integer> freqMap) {
+            return freqMap.entrySet()
+                           .stream()
+                           .map(e -> new WordModel(e.getKey(), e.getValue()))
+                           .collect(Collectors.toList());
+    }
+    
+    private void updateList() {
+        ObservableList<Pair<String, Integer>> freqList = AppState.getInstance().getFreqList();
+        freqList.clear();
+        freqList.addAll(mapToPairList(Processor.getFreqMap(AppState.getInstance().getArticles(), elementCombo.getSelectionModel().getSelectedIndex())));
+    }
+    
+    private void updateStatistics() {
+        Integer words = AppState.getInstance().getFreqList().size();
+        Integer articles = AppState.getInstance().getArticles().size();
+        statisticsArea.setText(articles + " articles analyzed\n" + words + " words extracted");
     }
     
     @FXML
@@ -93,7 +152,8 @@ public class MainWindowController
     
     @FXML
     private void elementComboChanged() {
-        System.out.println("element combo changed");
+        this.updateList();
+        this.updateStatistics();
     }
     
     @FXML

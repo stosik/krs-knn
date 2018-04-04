@@ -6,9 +6,9 @@
 <?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextArea?>
-<?import javafx.scene.control.TreeTableColumn?>
-<?import javafx.scene.control.TreeTableView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -16,20 +16,17 @@
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="800.0" minWidth="1000.0" prefHeight="800.0" prefWidth="1000.0" stylesheets="css/main.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controllers.MainWindowController">
    <left>
       <HBox prefHeight="689.0" prefWidth="275.0" BorderPane.alignment="CENTER">
-         <children>
-            <TreeTableView prefHeight="689.0" prefWidth="267.0" HBox.hgrow="ALWAYS">
-              <columns>
-                <TreeTableColumn prefWidth="129.0" text="Word" />
-                <TreeTableColumn prefWidth="137.0" text="Occurrences" />
-              </columns>
-               <columnResizePolicy>
-                  <TreeTableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy>
-            </TreeTableView>
-         </children>
          <BorderPane.margin>
             <Insets bottom="20.0" left="20.0" right="20.0" />
          </BorderPane.margin>
+         <children>
+            <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS">
+              <columns>
+                <TableColumn fx:id="wordColumn" prefWidth="131.0" text="Word" />
+                <TableColumn fx:id="occurencesColumn" prefWidth="143.0" text="Occurences" />
+              </columns>
+            </TableView>
+         </children>
       </HBox>
    </left>
    <bottom>
