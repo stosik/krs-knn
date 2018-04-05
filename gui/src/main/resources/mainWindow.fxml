@@ -26,14 +26,14 @@
                <children>
                   <JFXTabPane fx:id="wordsTabPane">
                      <tabs>
-                        <Tab fx:id="unifiedTab" text="Unified List" />
-                        <Tab fx:id="separateTab" text="Separate List" />
+                        <Tab fx:id="unifiedTab" closable="false" text="Unified List" />
+                        <Tab fx:id="separateTab" closable="false" text="Separate List" />
                      </tabs>
                   </JFXTabPane>
                   <TableView fx:id="tableView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
                     <columns>
-                      <TableColumn fx:id="wordColumn" prefWidth="131.0" text="Word" />
-                      <TableColumn fx:id="occurencesColumn" prefWidth="143.0" text="Occurences" />
+                      <TableColumn fx:id="wordColumn" prefWidth="165.0" text="Word" />
+                      <TableColumn fx:id="occurencesColumn" prefWidth="164.0" text="Occurences" />
                     </columns>
                   </TableView>
                   <JFXComboBox fx:id="countryComboBox" onAction="#countryComboBoxChanged" prefWidth="165.0">
