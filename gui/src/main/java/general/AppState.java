@@ -19,6 +19,8 @@ public class AppState
     private static AppState instance;
     
     private List<Article> articles = new ArrayList<>();
+    private List<Article> currentArticles = new ArrayList<>();
+    
     final private ObservableList<Pair<String, Integer>> freqList = FXCollections.observableArrayList();
     
     private Stage primaryStage;

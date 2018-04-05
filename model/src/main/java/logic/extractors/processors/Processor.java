@@ -78,7 +78,7 @@ public abstract class Processor
         }
     }
     
-    static String checkPlace(Article art)
+    public static String checkPlace(Article art)
     {
         if(art.getPlaces().size() == 1)
         {

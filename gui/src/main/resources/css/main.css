@@ -18,3 +18,29 @@
 .error {
     -fx-text-fill: red;
 }
+
+.jfx-tab-pane .headers-region {
+    -fx-background-color: rgb(77,102,204);
+}
+.jfx-tab-pane .tab-header-background {
+    -fx-background-color: rgb(77,102,204);
+}
+.jfx-tab-pane .tab-selected-line {
+    -fx-stroke: #75bc1b;
+    -fx-stroke-width: 3pt;
+}
+
+.list-cell {
+    -fx-font-size: 15px;
+    -fx-font-weight: 700;
+}
+
+.list-cell:filled:selected:focused {
+    -fx-background-color: rgb(77,102,204);
+    -fx-text-fill: white;
+}
+
+.list-cell:filled:hover {
+    -fx-background-color: rgb(97,122,224);
+    -fx-text-fill: white;
+}

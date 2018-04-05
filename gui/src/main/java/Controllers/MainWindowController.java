@@ -2,9 +2,14 @@ package Controllers;
 
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
+import com.jfoenix.controls.JFXTabPane;
+import general.Countries;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextArea;
@@ -90,18 +95,55 @@ public class MainWindowController
     @FXML
     private TableView tableView;
     
+    @FXML
+    private JFXTabPane wordsTabPane;
+    
+    @FXML
+    private Tab unifiedTab;
+    
+    @FXML
+    private Tab separateTab;
+    
+    @FXML
+    private JFXComboBox<String> countryComboBox;
+    
     private Stage stage;
     
     @FXML
     public void initialize() {
         this.stage = AppState.getInstance().getPrimaryStage();
         elementCombo.getItems().addAll(new String("Places"), new String("People"));
-        elementCombo.setPromptText("Select element");
+        elementCombo.getSelectionModel().select(0);
         
         wordColumn.setCellValueFactory(new PropertyValueFactory<WordModel, String>("word"));
         occurencesColumn.setCellValueFactory(new PropertyValueFactory<WordModel, Integer>("occurences"));
     
         tableView.setItems(AppState.getInstance().getFreqList());
+        
+        unifiedTab.setUserData(0);
+        separateTab.setUserData(1);
+        
+        addListenerToTabPane();
+        
+        addCountriesToComboBox();
+    }
+    
+    private void addListenerToTabPane() {
+        wordsTabPane.getSelectionModel().selectedItemProperty().addListener(
+            (ov, previous, next) -> {
+                countryComboBoxChanged();
+            }
+                                                                           );
+    }
+    
+    private void generateFreqList(List<Article> articles) {
+        this.updateList(articles);
+        this.updateStatistics();
+    }
+    
+    private void addCountriesToComboBox() {
+        countryComboBox.getItems().addAll(Countries.getCountries());
+        countryComboBox.getSelectionModel().select(0);
     }
     
     @FXML
@@ -122,8 +164,7 @@ public class MainWindowController
         XmlParser parser = new XmlParser();
         File xmlDir = new File(selectedDirectory.getAbsolutePath());
         AppState.getInstance().setArticles(parser.parseDir(xmlDir));
-        this.updateList();
-        this.updateStatistics();
+        generateFreqList(AppState.getInstance().getArticles());
     }
     
     private List<WordModel> mapToPairList(Map<String, Integer> freqMap) {
@@ -133,15 +174,16 @@ public class MainWindowController
                            .collect(Collectors.toList());
     }
     
-    private void updateList() {
+    private void updateList(List<Article> articles) {
         ObservableList<Pair<String, Integer>> freqList = AppState.getInstance().getFreqList();
         freqList.clear();
-        freqList.addAll(mapToPairList(Processor.getFreqMap(AppState.getInstance().getArticles(), elementCombo.getSelectionModel().getSelectedIndex())));
+        freqList.addAll(mapToPairList(Processor.getFreqMap(articles, elementCombo.getSelectionModel().getSelectedIndex())));
+        AppState.getInstance().setCurrentArticles(articles);
     }
     
     private void updateStatistics() {
         Integer words = AppState.getInstance().getFreqList().size();
-        Integer articles = AppState.getInstance().getArticles().size();
+        Integer articles = AppState.getInstance().getCurrentArticles().size();
         statisticsArea.setText(articles + " articles analyzed\n" + words + " words extracted");
     }
     
@@ -152,8 +194,25 @@ public class MainWindowController
     
     @FXML
     private void elementComboChanged() {
-        this.updateList();
-        this.updateStatistics();
+        this.generateFreqList(AppState.getInstance().getCurrentArticles());
+    }
+    
+    @FXML
+    private void countryComboBoxChanged() {
+        if ((int) wordsTabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
+            this.generateFreqList(AppState.getInstance().getArticles());
+            return;
+        }
+        List<Article> filtered = new ArrayList<>();
+        for (Article article : AppState.getInstance().getArticles()) {
+            String place = Processor.checkPlace(article);
+            System.out.println(place);
+            if (countryComboBox.getValue().toLowerCase().equals(place)) {
+                System.out.println(place);
+                filtered.add(article);
+            }
+        }
+        this.generateFreqList(filtered);
     }
     
     @FXML
