@@ -3,6 +3,7 @@ package Controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTabPane;
+import general.AppState;
 import general.Countries;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -14,22 +15,27 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.DirectoryChooser;
 import javafx.stage.Stage;
-
-import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
-
-import general.AppState;
 import javafx.util.Pair;
 import logic.extractors.WordModel;
 import logic.extractors.processors.Processor;
 import logic.model.Article;
 import logic.parser.XmlParser;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+
 public class MainWindowController
 {
+    
+    private static final String STOP_WORDS_FILE = "../../../extractor/stopwords.txt";
+    
     /**
      * TextArea that display statistics
      */
@@ -108,14 +114,15 @@ public class MainWindowController
     private Stage stage;
     
     @FXML
-    public void initialize() {
+    public void initialize()
+    {
         this.stage = AppState.getInstance().getPrimaryStage();
         elementCombo.getItems().addAll(new String("Places"), new String("People"));
         elementCombo.getSelectionModel().select(0);
         
         wordColumn.setCellValueFactory(new PropertyValueFactory<WordModel, String>("word"));
         occurencesColumn.setCellValueFactory(new PropertyValueFactory<WordModel, Integer>("occurences"));
-    
+        
         tableView.setItems(AppState.getInstance().getFreqList());
         
         unifiedTab.setUserData(0);
@@ -126,7 +133,8 @@ public class MainWindowController
         addCountriesToComboBox();
     }
     
-    private void addListenerToTabPane() {
+    private void addListenerToTabPane()
+    {
         wordsTabPane.getSelectionModel().selectedItemProperty().addListener(
             (ov, previous, next) -> {
                 countryComboBoxChanged();
@@ -134,79 +142,93 @@ public class MainWindowController
                                                                            );
     }
     
-    private void generateFreqList(List<Article> articles) {
+    private void generateFreqList(List<Article> articles)
+    {
         this.updateList(articles);
         this.updateStatistics();
     }
     
-    private void addCountriesToComboBox() {
+    private void addCountriesToComboBox()
+    {
         countryComboBox.getItems().addAll(Countries.getCountries());
         countryComboBox.getSelectionModel().select(0);
     }
     
     @FXML
-    private void directoryButtonClicked() {
+    private void directoryButtonClicked()
+    {
         System.out.println("Directory button clicked");
         DirectoryChooser chooser = new DirectoryChooser();
         chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         File selectedDirectory = chooser.showDialog(this.stage);
-        if (selectedDirectory == null)
+        if(selectedDirectory == null)
         {
             directoryLabel.getStyleClass().add("error");
             directoryLabel.setText("Select valid directory");
             return;
-        } else {
+        }
+        else
+        {
             directoryLabel.getStyleClass().remove("error");
             directoryLabel.setText(selectedDirectory.getPath());
         }
-    
+        
         XmlParser parser = new XmlParser();
         File xmlDir = new File(selectedDirectory.getAbsolutePath());
-        AppState.getInstance().setArticles(parser.parseDir(xmlDir));
+        AppState.getInstance().setArticles(parser.parseDir(xmlDir, retrieveStopWordsToRemove()));
         generateFreqList(AppState.getInstance().getArticles());
     }
     
-    private List<WordModel> mapToPairList(Map<String, Integer> freqMap) {
-            return freqMap.entrySet()
-                           .stream()
-                           .map(e -> new WordModel(e.getKey(), e.getValue()))
-                           .collect(Collectors.toList());
+    private List<WordModel> mapToPairList(Map<String, Integer> freqMap)
+    {
+        return freqMap.entrySet()
+                      .stream()
+                      .map(e -> new WordModel(e.getKey(), e.getValue()))
+                      .collect(Collectors.toList());
     }
     
-    private void updateList(List<Article> articles) {
+    private void updateList(List<Article> articles)
+    {
         ObservableList<Pair<String, Integer>> freqList = AppState.getInstance().getFreqList();
         freqList.clear();
         freqList.addAll(mapToPairList(Processor.getFreqMap(articles, elementCombo.getSelectionModel().getSelectedIndex())));
         AppState.getInstance().setCurrentArticles(articles);
     }
     
-    private void updateStatistics() {
+    private void updateStatistics()
+    {
         Integer words = AppState.getInstance().getFreqList().size();
         Integer articles = AppState.getInstance().getCurrentArticles().size();
         statisticsArea.setText(articles + " articles analyzed\n" + words + " words extracted");
     }
     
     @FXML
-    private void extractButtonClicked() {
+    private void extractButtonClicked()
+    {
         System.out.println("Extract button clicked");
     }
     
     @FXML
-    private void elementComboChanged() {
+    private void elementComboChanged()
+    {
         this.generateFreqList(AppState.getInstance().getCurrentArticles());
     }
     
     @FXML
-    private void countryComboBoxChanged() {
-        if ((int) wordsTabPane.getSelectionModel().getSelectedItem().getUserData() == 0) {
+    private void countryComboBoxChanged()
+    {
+        if((int) wordsTabPane.getSelectionModel().getSelectedItem().getUserData() == 0)
+        {
             this.generateFreqList(AppState.getInstance().getArticles());
             return;
         }
         List<Article> filtered = new ArrayList<>();
-        for (Article article : AppState.getInstance().getArticles()) {
+        for(Article article : AppState.getInstance().getArticles())
+        {
             String place = Processor.checkPlace(article);
             System.out.println(place);
-            if (countryComboBox.getValue().toLowerCase().equals(place)) {
+            if(countryComboBox.getValue().toLowerCase().equals(place))
+            {
                 System.out.println(place);
                 filtered.add(article);
             }
@@ -215,12 +237,30 @@ public class MainWindowController
     }
     
     @FXML
-    private void extractionTypeComboChanged() {
+    private void extractionTypeComboChanged()
+    {
         System.out.println("Extraction combo changed");
     }
     
     @FXML
-    private void similarityComboChanged() {
+    private void similarityComboChanged()
+    {
         System.out.println("similarity combo changed");
+    }
+    
+    private List<String> retrieveStopWordsToRemove()
+    {
+        List<String> stopWords = new ArrayList<>();
+        try(Stream<String> stream = Files.lines(Paths.get("../resources/stopwords.txt")))
+        {
+            stopWords = stream
+                .map(String::toLowerCase)
+                .collect(Collectors.toList());
+        }
+        catch(IOException e)
+        {
+            e.printStackTrace();
+        }
+        return stopWords;
     }
 }

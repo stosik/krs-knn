@@ -16,19 +16,19 @@ import java.util.Objects;
 @NoArgsConstructor
 public class XmlParser
 {
-    public List<Article> parseDir(File dir)
+    public List<Article> parseDir(File dir, List<String> stopWords)
     {
         List<Article> articlesList = new ArrayList<>();
         List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
         
         for(File file : files)
         {
-            articlesList.addAll(Objects.requireNonNull(parse(file)));
+            articlesList.addAll(Objects.requireNonNull(parse(file, stopWords)));
         }
         return articlesList;
     }
     
-    private List<Article> parse(File file)
+    private List<Article> parse(File file, List<String> stopWords)
     {
         List<Article> articlesList = new ArrayList<>();
         SAXReader reader = new SAXReader();
@@ -44,7 +44,7 @@ public class XmlParser
                 Article a = new Article();
                 if(e.element("text").element("body") != null)
                 {
-                    a.setBody(WordRemoval.removeDefaultWords(e.element("text").element("body").getText().toLowerCase()));
+                    a.setBody(WordRemoval.filterOnceParsed(e.element("text").element("body").getText().toLowerCase(), stopWords));
                 }
                 else
                 {
@@ -87,19 +87,5 @@ public class XmlParser
             }
         }
         return list;
-    }
-    
-    public List<Article> parseFilesFromDirectory(File dir)
-    {
-        List<File> files = Arrays
-            .asList(Objects.requireNonNull(dir.listFiles((dir1, name) -> name.endsWith(".xml"))));
-        List<Article> articles = new ArrayList<>();
-        
-        for(File f : files)
-        {
-            articles.addAll(Objects.requireNonNull(parse(f)));
-        }
-        
-        return articles;
     }
 }

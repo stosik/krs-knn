@@ -114,12 +114,4 @@ public class StringExtractors
         System.out.println(WordRemoval.removeAllEnglishStopWords(BODY));
     }
     
-    @Test
-    public void parseToXmlAndExtractFromArticleOnlyMeaningfulWords()
-    {
-        XmlParser parser = new XmlParser();
-        File xmlDir = new File("data/text/xml");
-        List<Article> articles = parser.parseDir(xmlDir);
-        System.out.println(WordRemoval.removeAllEnglishStopWords(articles.get(0).getBody()));
-    }
 }
