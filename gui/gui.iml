@@ -11,6 +11,7 @@
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:8.0.1" level="project" />
+    <orderEntry type="library" name="Maven: com.jfoenix:jfoenix:8.0.1" level="project" />
     <orderEntry type="library" scope="PROVIDED" name="Maven: org.projectlombok:lombok:1.16.20" level="project" />
     <orderEntry type="module" module-name="model" />
     <orderEntry type="library" name="Maven: org.jsoup:jsoup:1.11.2" level="project" />

@@ -19,48 +19,6 @@ import java.util.Objects;
 
 public class SgmReader
 {
-    
-    private static Document readSgm(File file)
-    {
-        try
-        {
-            return Jsoup.parse(file, "UTF-8");
-        }
-        catch(IOException e)
-        {
-            return null;
-        }
-    }
-    
-    private static void elementExplorer(Element element, org.dom4j.Element xml)
-    {
-        org.dom4j.Element xmlElement = xml.addElement(element.tagName());
-        
-        for(org.jsoup.nodes.Node child : element.childNodes())
-        {
-            if(child instanceof Element && (child.childNodeSize() == 1 || child.childNodeSize() == 0))
-            {
-                org.dom4j.Element newXmlElement = xmlElement.addElement(((Element) child).tagName());
-                newXmlElement.addText(WordRemoval.removeNumericCharacters(((Element) child).text()));
-            }
-            else if(child instanceof Element && child.childNodeSize() > 1)
-            {
-                elementExplorer(((Element) child), xmlElement);
-            }
-            else if(child instanceof TextNode && ((Element) child.parent()).tagName().equalsIgnoreCase("TEXT") && !((TextNode) child).isBlank() && ((TextNode) child).text().length() > 11)
-            {
-                xmlElement.addElement("body").addText(WordRemoval.removeNumericCharacters(WordRemoval.removeDefaultWords(((TextNode) child).text())));
-            }
-        }
-    }
-    
-    private static org.dom4j.Document createXmlBase()
-    {
-        org.dom4j.Document document = DocumentHelper.createDocument();
-        org.dom4j.Element root = document.addElement("root");
-        return document;
-    }
-    
     public void getData(File dir, String destination)
     {
         List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
@@ -90,6 +48,47 @@ public class SgmReader
             {
                 e.printStackTrace();
             }
+        }
+    }
+    
+    private static org.dom4j.Document createXmlBase()
+    {
+        org.dom4j.Document document = DocumentHelper.createDocument();
+        org.dom4j.Element root = document.addElement("root");
+        return document;
+    }
+    
+    private static void elementExplorer(Element element, org.dom4j.Element xml)
+    {
+        org.dom4j.Element xmlElement = xml.addElement(element.tagName());
+        
+        for(org.jsoup.nodes.Node child : element.childNodes())
+        {
+            if(child instanceof Element && (child.childNodeSize() == 1 || child.childNodeSize() == 0))
+            {
+                org.dom4j.Element newXmlElement = xmlElement.addElement(((Element) child).tagName());
+                newXmlElement.addText(WordRemoval.removeNumericCharacters(((Element) child).text()));
+            }
+            else if(child instanceof Element && child.childNodeSize() > 1)
+            {
+                elementExplorer(((Element) child), xmlElement);
+            }
+            else if(child instanceof TextNode && ((Element) child.parent()).tagName().equalsIgnoreCase("TEXT") && !((TextNode) child).isBlank() && ((TextNode) child).text().length() > 11)
+            {
+                xmlElement.addElement("body").addText(WordRemoval.removeAllEnglishStopWords(WordRemoval.removeNumericCharacters(((TextNode) child).text())));
+            }
+        }
+    }
+    
+    private static Document readSgm(File file)
+    {
+        try
+        {
+            return Jsoup.parse(file, "UTF-8");
+        }
+        catch(IOException e)
+        {
+            return null;
         }
     }
 }

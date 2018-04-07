@@ -1,6 +1,7 @@
 package logic.parser;
 
 import logic.model.Article;
+import logic.utils.WordRemoval;
 import lombok.NoArgsConstructor;
 import org.dom4j.Document;
 import org.dom4j.Element;
@@ -43,7 +44,7 @@ public class XmlParser
                 Article a = new Article();
                 if(e.element("text").element("body") != null)
                 {
-                    a.setBody(e.element("text").element("body").getText().toLowerCase());
+                    a.setBody(WordRemoval.removeDefaultWords(e.element("text").element("body").getText().toLowerCase()));
                 }
                 else
                 {

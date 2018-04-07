@@ -4,8 +4,6 @@ import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTabPane;
 import general.Countries;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -150,6 +148,7 @@ public class MainWindowController
     private void directoryButtonClicked() {
         System.out.println("Directory button clicked");
         DirectoryChooser chooser = new DirectoryChooser();
+        chooser.setInitialDirectory(new File(System.getProperty("user.dir")));
         File selectedDirectory = chooser.showDialog(this.stage);
         if (selectedDirectory == null)
         {

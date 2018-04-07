@@ -1,6 +1,7 @@
 package logic.parser;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import logic.model.Article;
 import logic.sgm.SgmReader;
 import org.dom4j.DocumentException;
 import org.dom4j.io.SAXReader;
@@ -12,6 +13,7 @@ import javax.swing.text.html.parser.Parser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.List;
 
 public class JsoupTests
 {
