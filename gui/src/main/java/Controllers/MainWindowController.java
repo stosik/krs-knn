@@ -251,7 +251,7 @@ public class MainWindowController
     private List<String> retrieveStopWordsToRemove()
     {
         List<String> stopWords = new ArrayList<>();
-        try(Stream<String> stream = Files.lines(Paths.get("../resources/stopwords.txt")))
+        try(Stream<String> stream = Files.lines(Paths.get("./model/extractor/stopwords.txt")))
         {
             stopWords = stream
                 .map(String::toLowerCase)
