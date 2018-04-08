@@ -16,19 +16,19 @@ import java.util.Objects;
 @NoArgsConstructor
 public class XmlParser
 {
-    public List<Article> parseDir(File dir, List<String> stopWords)
+    public List<Article> parseDir(File dir)
     {
         List<Article> articlesList = new ArrayList<>();
         List<File> files = Arrays.asList(Objects.requireNonNull(dir.listFiles()));
         
         for(File file : files)
         {
-            articlesList.addAll(Objects.requireNonNull(parse(file, stopWords)));
+            articlesList.addAll(parse(file));
         }
         return articlesList;
     }
     
-    private List<Article> parse(File file, List<String> stopWords)
+    private List<Article> parse(File file)
     {
         List<Article> articlesList = new ArrayList<>();
         SAXReader reader = new SAXReader();
@@ -42,9 +42,9 @@ public class XmlParser
             for(Element e : articles)
             {
                 Article a = new Article();
-                if(e.element("text").element("body") != null)
+                if(e.element("body") != null)
                 {
-                    a.setBody(WordRemoval.filterOnceParsed(e.element("text").element("body").getText().toLowerCase(), stopWords));
+                    a.setBody(e.element("body").getText().toLowerCase());
                 }
                 else
                 {
@@ -52,17 +52,14 @@ public class XmlParser
                 }
                 a.setTopics(getList(e.elements("topics")));
                 a.setPlaces(getList(e.elements("places")));
-                a.setPeople(getList(e.elements("people")));
-                if(e.element("text").element("title") != null)
-                {
-                    a.setTextTitle(e.element("text").element("title").getText().toLowerCase());
-                }
                 articlesList.add(a);
             }
         }
         catch(Exception ex)
         {
-            return null;
+            ex.printStackTrace();
+            System.out.println("Exception");
+            return new ArrayList<>();
         }
         
         return articlesList;

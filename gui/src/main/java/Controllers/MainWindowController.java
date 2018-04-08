@@ -175,7 +175,7 @@ public class MainWindowController
         
         XmlParser parser = new XmlParser();
         File xmlDir = new File(selectedDirectory.getAbsolutePath());
-        AppState.getInstance().setArticles(parser.parseDir(xmlDir, retrieveStopWordsToRemove()));
+        AppState.getInstance().setArticles(parser.parseDir(xmlDir));
         generateFreqList(AppState.getInstance().getArticles());
     }
     
@@ -225,11 +225,8 @@ public class MainWindowController
         List<Article> filtered = new ArrayList<>();
         for(Article article : AppState.getInstance().getArticles())
         {
-            String place = Processor.checkPlace(article);
-            System.out.println(place);
-            if(countryComboBox.getValue().toLowerCase().equals(place))
+            if(article.getPlaces().contains(countryComboBox.getValue().toLowerCase()))
             {
-                System.out.println(place);
                 filtered.add(article);
             }
         }

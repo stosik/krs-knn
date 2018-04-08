@@ -80,36 +80,29 @@ public abstract class Processor
     
     public static String checkPlace(Article art)
     {
-        if(art.getPlaces().size() == 1)
+        if(art.getPlaces().contains("west-germany"))
         {
-            if(art.getPlaces().contains("west germany"))
-            {
-                return "west germany";
-            }
-            else if(art.getPlaces().contains("usa"))
-            {
-                return "usa";
-            }
-            else if(art.getPlaces().contains("france"))
-            {
-                return "france";
-            }
-            else if(art.getPlaces().contains("uk"))
-            {
-                return "uk";
-            }
-            else if(art.getPlaces().contains("canada"))
-            {
-                return "canada";
-            }
-            else if(art.getPlaces().contains("japan"))
-            {
-                return "japan";
-            }
-            else
-            {
-                return null;
-            }
+            return "west germany";
+        }
+        else if(art.getPlaces().contains("usa"))
+        {
+            return "usa";
+        }
+        else if(art.getPlaces().contains("france"))
+        {
+            return "france";
+        }
+        else if(art.getPlaces().contains("uk"))
+        {
+            return "uk";
+        }
+        else if(art.getPlaces().contains("canada"))
+        {
+            return "canada";
+        }
+        else if(art.getPlaces().contains("japan"))
+        {
+            return "japan";
         }
         else
         {

@@ -1,6 +1,7 @@
 package logic.parser;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
+import logic.SGMParser;
 import logic.model.Article;
 import logic.sgm.SgmReader;
 import org.dom4j.DocumentException;
@@ -13,6 +14,8 @@ import javax.swing.text.html.parser.Parser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.List;
 
 public class JsoupTests
@@ -59,6 +62,21 @@ public class JsoupTests
         catch(DocumentException e)
         {
             e.printStackTrace();
+        }
+    }
+    
+    @Test
+    @Ignore
+    public void parsexD()
+    {
+        try
+        {
+            System.out.println(System.getProperty("user.dir"));
+            SGMParser parser = new SGMParser(Paths.get("./data/text/sgm"), Paths.get("./data/text/extracted"));
+            parser.extract();
+        } catch (IOException err) {
+            err.printStackTrace();
+            System.out.println("lipa lipa lipa");
         }
     }
     

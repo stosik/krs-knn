@@ -46,7 +46,6 @@ public class FreqListBuilder
                        || art.getPlaces().contains("canada") || art.getPlaces().contains("japan")))
                 {
                     countWordsIfBodyNotEmpty(wordCount, art);
-                    ifTitleIsNotEmptyCountWords(wordCount, art);
                 }
             }
             else if(option == 1)
@@ -57,33 +56,11 @@ public class FreqListBuilder
                        || art.getTopics().contains("money fx") || art.getTopics().contains("interest")))
                 {
                     countWordsIfBodyNotEmpty(wordCount, art);
-                    ifTitleIsNotEmptyCountWords(wordCount, art);
-                }
-            }
-            else if(option == 2)
-            {
-                if(art.getPeople().size() == 1
-                   && (art.getPeople().contains("arthur") || art.getPeople().contains("jordan")
-                       || art.getPeople().contains("leonidas") || art.getPeople().contains("ramsay")
-                       || art.getPeople().contains("spock") || art.getPeople().contains("stalin")))
-                {
-                    countWordsIfBodyNotEmpty(wordCount, art);
-                    ifTitleIsNotEmptyCountWords(wordCount, art);
                 }
             }
         }
         
         return wordCount;
-    }
-    
-    private void ifTitleIsNotEmptyCountWords(Map<String, Integer> wordCount, Article art)
-    {
-        final String[] words_table;
-        if(art.getTextTitle() != null)
-        {
-            words_table = art.getTextTitle().split(" ");
-            countWordsInExpression(wordCount, words_table);
-        }
     }
     
     private void countWordsInExpression(Map<String, Integer> wordCount, String[] words_table)

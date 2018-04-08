@@ -7,6 +7,7 @@ import org.dom4j.io.XMLWriter;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.nodes.Node;
 import org.jsoup.nodes.TextNode;
 import org.jsoup.select.Elements;
 
@@ -54,7 +55,7 @@ public class SgmReader
     private static org.dom4j.Document createXmlBase()
     {
         org.dom4j.Document document = DocumentHelper.createDocument();
-        org.dom4j.Element root = document.addElement("root");
+        document.addElement("root");
         return document;
     }
     
@@ -64,18 +65,38 @@ public class SgmReader
         
         for(org.jsoup.nodes.Node child : element.childNodes())
         {
-            if(child instanceof Element && (child.childNodeSize() == 1 || child.childNodeSize() == 0))
+            if (child instanceof Element)
             {
-                org.dom4j.Element newXmlElement = xmlElement.addElement(((Element) child).tagName());
-                newXmlElement.addText(WordRemoval.removeNumericCharacters(((Element) child).text()));
-            }
-            else if(child instanceof Element && child.childNodeSize() > 1)
-            {
-                elementExplorer(((Element) child), xmlElement);
-            }
-            else if(child instanceof TextNode && ((Element) child.parent()).tagName().equalsIgnoreCase("TEXT") && !((TextNode) child).isBlank() && ((TextNode) child).text().length() > 11)
-            {
-                xmlElement.addElement("body").addText(WordRemoval.removeAllEnglishStopWords(WordRemoval.removeNumericCharacters(((TextNode) child).text())));
+                Element c = (Element) child;
+                String tagName = c.tagName();
+                String text = c.text();
+                if (tagName.equals("places") || tagName.equals("topics")) {
+                    org.dom4j.Element newXmlElement = xmlElement.addElement(tagName);
+                    List<Node> e = c.childNodes();
+                    if (e.size() != 0 && e.size() == 1) {
+                        newXmlElement.addText(text);
+                    } else {
+                        for(Node anE : e)
+                        {
+                            if(anE instanceof Element)
+                            {
+                                org.dom4j.Element newD = newXmlElement.addElement("d");
+                                newD.addText(((Element) anE).text());
+                            }
+                        }
+                    }
+                } else if (tagName.equals("text")) {
+                    for (Element ch : c.children()) {
+                        if (ch instanceof Element) {
+                            Element maybeBody = ch;
+                            if (maybeBody.tagName().equals("content")) {
+                                org.dom4j.Element newXmlElement = xmlElement.addElement("body");
+                                String body = WordRemoval.removeAllEnglishStopWords(WordRemoval.removeNumericCharacters(WordRemoval.removeSpecialCharacters(maybeBody.text())));
+                                newXmlElement.addText(body);
+                            }
+                        }
+                    }
+                }
             }
         }
     }

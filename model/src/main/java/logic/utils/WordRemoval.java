@@ -20,12 +20,19 @@ public class WordRemoval
         );
     private static final Pattern invalidOnlyCharacters = Pattern.compile("[^a-zA-Z\\s]");
     private static final Pattern invalidWordsToRemove = Pattern.compile("([&]*[#]*[;]*[]*[]*)");
+    private static final Pattern specialCharacters = Pattern.compile("\\n|\\t");
     
     
     public static String removeDefaultWords(String text)
     {
         Matcher matcher = defaultWordsToRemove.matcher(text);
         return matcher.replaceAll("");
+    }
+    
+    public static String removeSpecialCharacters(String text)
+    {
+        Matcher matcher = specialCharacters.matcher(text);
+        return matcher.replaceAll(" ");
     }
     
     public static String removeNumericCharacters(String text)
