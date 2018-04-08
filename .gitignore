@@ -1,6 +1,8 @@
-build/
-classes/
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
 target/
-.iml
-.idea
-.gradle
