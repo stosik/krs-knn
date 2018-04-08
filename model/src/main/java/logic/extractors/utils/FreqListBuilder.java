@@ -41,7 +41,7 @@ public class FreqListBuilder
             if(option == 0)
             {
                 if(art.getPlaces().size() == 1
-                   && (art.getPlaces().contains("west germany") || art.getPlaces().contains("usa")
+                   && (art.getPlaces().contains("west-germany") || art.getPlaces().contains("usa")
                        || art.getPlaces().contains("france") || art.getPlaces().contains("uk")
                        || art.getPlaces().contains("canada") || art.getPlaces().contains("japan")))
                 {
