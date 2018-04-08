@@ -73,17 +73,8 @@ public class SgmReader
                 if (tagName.equals("places") || tagName.equals("topics")) {
                     org.dom4j.Element newXmlElement = xmlElement.addElement(tagName);
                     List<Node> e = c.childNodes();
-                    if (e.size() != 0 && e.size() == 1) {
+                    if (e.size() == 1) {
                         newXmlElement.addText(text);
-                    } else {
-                        for(Node anE : e)
-                        {
-                            if(anE instanceof Element)
-                            {
-                                org.dom4j.Element newD = newXmlElement.addElement("d");
-                                newD.addText(((Element) anE).text());
-                            }
-                        }
                     }
                 } else if (tagName.equals("text")) {
                     for (Element ch : c.children()) {
