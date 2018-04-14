@@ -1,8 +1,14 @@
 package logic.metrics;
 
-import logic.model.WordVector;
+import javafx.util.Pair;
+import logic.model.Base;
+import logic.model.entity.WordVector;
 
-public interface Distance {
+import java.util.Comparator;
 
-    double distance(WordVector wv1, WordVector wv2);
+public interface Distance<EntityT extends Base> {
+    
+    Comparator<Pair<Integer, Double>> getComparator();
+    
+    double distance(EntityT first, EntityT second);
 }

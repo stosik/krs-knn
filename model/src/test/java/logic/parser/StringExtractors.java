@@ -1,6 +1,5 @@
 package logic.parser;
 
-import logic.model.Article;
 import logic.utils.WordRemoval;
 import org.apache.lucene.analysis.LowerCaseFilter;
 import org.apache.lucene.analysis.StopFilter;
@@ -12,9 +11,7 @@ import org.apache.lucene.analysis.standard.StandardTokenizer;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
 import org.junit.Test;
 
-import java.io.File;
 import java.io.StringReader;
-import java.util.List;
 
 public class StringExtractors
 {

@@ -1,5 +1,6 @@
 package logic.model;
 
+import logic.model.entity.Article;
 import lombok.Data;
 
 @Data

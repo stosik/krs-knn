@@ -18,7 +18,7 @@ import javafx.stage.Stage;
 import javafx.util.Pair;
 import logic.extractors.WordModel;
 import logic.extractors.processors.Processor;
-import logic.model.Article;
+import logic.model.entity.Article;
 import logic.parser.XmlParser;
 
 import java.io.File;

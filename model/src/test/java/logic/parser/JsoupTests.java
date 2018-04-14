@@ -1,11 +1,7 @@
 package logic.parser;
 
 import jdk.nashorn.internal.ir.annotations.Ignore;
-import logic.SGMParser;
-import logic.model.Article;
-import logic.sgm.SgmReader;
-import org.dom4j.DocumentException;
-import org.dom4j.io.SAXReader;
+import logic.io.SgmReader;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -14,21 +10,16 @@ import javax.swing.text.html.parser.Parser;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
-import java.util.List;
 
 public class JsoupTests
 {
-    private SgmReader xmlReader = new SgmReader();
-    
     @Test
     @Ignore
     public void parseTest()
     {
         try
         {
-            File file = new File("../ksr/src/test/resources/reut2-000.sgm");
+            File file = new File("../ksr/src/test/resources/reut2-000.io");
             DTD dtd = DTD.getDTD("../ksr/src/test/resources/lewis.dtd");
             FileReader fileReader = new FileReader(file);
             Assert.assertNotNull(dtd);
@@ -41,42 +32,6 @@ public class JsoupTests
         catch(IOException e)
         {
             Assert.fail("as");
-        }
-    }
-    
-    @Test
-    public void testSGMToXML()
-    {
-        new SgmReader().getData(new File("./data/text/sgm"), "./data/text/xml/");
-    }
-    
-    @Test
-    @Ignore
-    public void xmlRead()
-    {
-        try
-        {
-            SAXReader reader = new SAXReader();
-            org.dom4j.Document document = reader.read(new File("reut2-000.xml"));
-        }
-        catch(DocumentException e)
-        {
-            e.printStackTrace();
-        }
-    }
-    
-    @Test
-    @Ignore
-    public void parsexD()
-    {
-        try
-        {
-            System.out.println(System.getProperty("user.dir"));
-            SGMParser parser = new SGMParser(Paths.get("./data/text/sgm"), Paths.get("./data/text/extracted"));
-            parser.extract();
-        } catch (IOException err) {
-            err.printStackTrace();
-            System.out.println("lipa lipa lipa");
         }
     }
     
