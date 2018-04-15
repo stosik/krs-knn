@@ -23,7 +23,7 @@ public class Ngram implements Distance<FrequencyMatrix>
     }
     
     @Override
-    public double measure(FrequencyMatrix first, FrequencyMatrix second)
+    public double distance(FrequencyMatrix first, FrequencyMatrix second)
     {
         StringBuilder firstSb = new StringBuilder();
         StringBuilder secondSb = new StringBuilder();

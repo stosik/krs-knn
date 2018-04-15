@@ -34,7 +34,7 @@ public class ArticlePreprocessor
         {
             StandardTokenizer tokenizer = new StandardTokenizer();
             CharTermAttribute attr = tokenizer.addAttribute(CharTermAttribute.class);
-            TokenStream tokenStream = new StopFilter(tokenizer, stopWords);
+            TokenStream tokenStream = new StopFilter(tokenizer, StopFilter.makeStopSet());
             tokenizer.setReader(new StringReader(entity.getContent()));
             StringBuilder sb = new StringBuilder();
             try

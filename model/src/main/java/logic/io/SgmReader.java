@@ -29,17 +29,20 @@ public class SgmReader
     
     private void loadFiltersFromFile(String label)
     {
-        if(label.equals("topics"))
+        switch(label)
         {
-            Arrays.stream(Topic.values())
-                  .map(Topic::getTopic)
-                  .forEach(filters::add);
-        }
-        else if(label.equals("places"))
-        {
-            Arrays.stream(Place.values())
-                  .map(Place::getPlace)
-                  .forEach(filters::add);
+            case "topics":
+                Arrays.stream(Topic.values())
+                      .map(Topic::getTopic)
+                      .forEach(filters::add);
+                break;
+            case "places":
+                Arrays.stream(Place.values())
+                      .map(Place::getPlace)
+                      .forEach(filters::add);
+                break;
+            default:
+                throw new RuntimeException("No valid label passed");
         }
     }
     
