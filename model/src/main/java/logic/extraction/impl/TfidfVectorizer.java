@@ -25,10 +25,10 @@ public class TfidfVectorizer implements Extractor<Article, WordVector>
         N = trainingEntities.size();
     }
     
-    private void fillDictionary(List<Article> trainingEntities)
+    private void fillDictionary(List<Article> trainingArticles)
     {
         Integer totalWordsCount = 0;
-        for(Article entity : trainingEntities)
+        for(Article entity : trainingArticles)
         {
             Set<String> entityUniqueWords = TextUtils.getUniqueWords(entity);
             for(String word : entityUniqueWords)
@@ -43,9 +43,9 @@ public class TfidfVectorizer implements Extractor<Article, WordVector>
     }
     
     @Override
-    public List<WordVector> extractFeatures(List<Article> testEntities)
+    public List<WordVector> extractFeatures(List<Article> articles)
     {
-        return testEntities
+        return articles
             .stream()
             .map(this::extractFeatures)
             .collect(Collectors.toList());

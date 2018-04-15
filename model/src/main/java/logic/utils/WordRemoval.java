@@ -12,7 +12,7 @@ import java.util.stream.Stream;
 
 public class WordRemoval
 {
-    private static final String STOP_WORDS_FILE = "./extractor/stopwords.txt";
+    private static final String STOP_WORDS_FILE = "./model//extractor/stopwords.txt";
     private static Pattern defaultWordsToRemove = Pattern.compile
         (
             "[ ](?:one|two|three|four|five|six|seven|eight|twenty|an|a|and|about|the|are|is|not|have|has|had|of|it|in|mln|said|for|will|its|with|from|that|was|would|which|this|last|REUTER)\\b\\.?",
@@ -63,7 +63,7 @@ public class WordRemoval
         return matcher.replaceAll(" ");
     }
     
-    private static List<String> readFromFileStopWords()
+    public static List<String> readFromFileStopWords()
     {
         List<String> stopWords = new ArrayList<>();
         try(Stream<String> stream = Files.lines(Paths.get(STOP_WORDS_FILE)))

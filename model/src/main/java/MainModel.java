@@ -56,7 +56,7 @@ public class MainModel
         textTrainingSet = null;
         textTestSet = null;
         
-        Distance<Base> measurer = MainModel.getMeasurer(MEASURE_NAME);
+        Distance<Base> measurer = MainModel.getMeasure(MEASURE_NAME);
         Classifier<Base> classifier = new KNN<>(K_VALUE, measurer);
         List<String> classifiedLabels;
         try
@@ -90,7 +90,7 @@ public class MainModel
         }
     }
     
-    public static Distance getMeasurer(String name)
+    public static Distance getMeasure(String name)
     {
         switch(name)
         {

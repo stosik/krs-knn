@@ -2,6 +2,7 @@ package logic.preprocessing;
 
 import logic.model.entity.Article;
 import logic.preprocessing.filtering.IrregularVerbsFilter;
+import logic.utils.WordRemoval;
 import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
@@ -29,12 +30,11 @@ public class ArticlePreprocessor
     public List<Article> removeStopWords(List<Article> entities)
     {
         List<Article> result = new ArrayList<>();
-        CharArraySet stopWords = EnglishAnalyzer.getDefaultStopSet();
         for(Article entity : entities)
         {
             StandardTokenizer tokenizer = new StandardTokenizer();
             CharTermAttribute attr = tokenizer.addAttribute(CharTermAttribute.class);
-            TokenStream tokenStream = new StopFilter(tokenizer, StopFilter.makeStopSet());
+            TokenStream tokenStream = new StopFilter(tokenizer, StopFilter.makeStopSet(WordRemoval.readFromFileStopWords()));
             tokenizer.setReader(new StringReader(entity.getContent()));
             StringBuilder sb = new StringBuilder();
             try
