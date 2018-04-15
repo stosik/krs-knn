@@ -3,10 +3,8 @@ package logic.preprocessing;
 import logic.model.entity.Article;
 import logic.preprocessing.filtering.IrregularVerbsFilter;
 import logic.utils.WordRemoval;
-import org.apache.lucene.analysis.CharArraySet;
 import org.apache.lucene.analysis.StopFilter;
 import org.apache.lucene.analysis.TokenStream;
-import org.apache.lucene.analysis.en.EnglishAnalyzer;
 import org.apache.lucene.analysis.hunspell.Dictionary;
 import org.apache.lucene.analysis.hunspell.HunspellStemFilter;
 import org.apache.lucene.analysis.pattern.PatternReplaceFilter;
@@ -109,7 +107,12 @@ public class ArticlePreprocessor
                     {
                         stems.add(attr.toString());
                     }
-                    String stem = stems.stream().min(Comparator.comparing(String::length)).orElse("");
+                    
+                    String stem = stems
+                        .stream()
+                        .min(Comparator.comparing(String::length))
+                        .orElse("");
+                    
                     sb.append(stem).append(" ");
                     tokenStream.close();
                 }

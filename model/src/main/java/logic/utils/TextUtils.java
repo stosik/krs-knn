@@ -15,21 +15,21 @@ import java.util.stream.Collectors;
 @NoArgsConstructor
 public class TextUtils
 {
+    public static Set<String> getUniqueWords(Article article)
+    {
+        return new HashSet<>(getAllWords(article));
+    }
+    
+    public static Map<String, Long> getAllWordsCounts(Article article)
+    {
+        return getAllWords(article)
+            .stream()
+            .collect(Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.counting()));
+    }
+    
     public static List<String> getAllWords(Article entity)
     {
-        return Arrays.asList(entity.getContent().toLowerCase().split("\\W+"));
-    }
-    
-    public static Set<String> getUniqueWords(Article entity)
-    {
-        return new HashSet<>(getAllWords(entity));
-    }
-    
-    public static Map<String, Long> getAllWordsCounts(Article entity)
-    {
-        List<String> words = getAllWords(entity);
-        return words.stream().collect(
-//        Collectors.groupingBy(Function.identity(), Collectors.counting()));
-            Collectors.groupingBy(Function.identity(), TreeMap::new, Collectors.counting()));
+        return Arrays
+            .asList(entity.getContent().toLowerCase().split("\\W+"));
     }
 }

@@ -14,7 +14,6 @@ import java.util.stream.Collectors;
 
 public class CountVectorizer implements Extractor<Article, WordVector>
 {
-    
     private final Map<String, Integer> dictionary = new HashMap<>();
     
     public CountVectorizer(List<Article> entities)
@@ -22,12 +21,12 @@ public class CountVectorizer implements Extractor<Article, WordVector>
         fillDictionary(entities);
     }
     
-    private void fillDictionary(List<Article> trainingEntities)
+    private void fillDictionary(List<Article> trainingArticles)
     {
         Integer totalWordsCount = 0;
-        for(Article entity : trainingEntities)
+        for(Article article : trainingArticles)
         {
-            Set<String> entityUniqueWords = TextUtils.getUniqueWords(entity);
+            Set<String> entityUniqueWords = TextUtils.getUniqueWords(article);
             for(String word : entityUniqueWords)
             {
                 if(!dictionary.containsKey(word))
@@ -47,16 +46,15 @@ public class CountVectorizer implements Extractor<Article, WordVector>
             .collect(Collectors.toList());
     }
     
-    private WordVector extractFeatures(Article textEntity)
+    private WordVector extractFeatures(Article article)
     {
-        Map<Integer, Double> features;
-        List<String> allWords = TextUtils.getAllWords(textEntity);
-        features = allWords
+        Map<Integer, Double> features = TextUtils
+            .getAllWords(article)
             .stream()
             .map(dictionary::get)
             .filter(Objects::nonNull)
             .collect(Collectors.toMap(wordId -> wordId, wordId -> 1D, Double::sum));
         
-        return new WordVector(textEntity.getLabel(), features);
+        return new WordVector(article.getLabel(), features);
     }
 }

@@ -4,7 +4,7 @@ import logic.model.Base;
 
 import java.util.List;
 
-public interface Extractor<InputEntityT extends Base, OutputEntityT extends Base> {
+public interface Extractor<InputT extends Base, OutputT extends Base> {
     
-    List<OutputEntityT> extractFeatures(List<InputEntityT> entities);
+    List<OutputT> extractFeatures(List<InputT> entities);
 }

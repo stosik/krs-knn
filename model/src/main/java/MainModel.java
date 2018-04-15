@@ -51,25 +51,23 @@ public class MainModel
         
         //Extract features from training and test set
         List<Base> trainingSet = featureExtractor.extractFeatures(textTrainingSet);
-        List<Base> testSet = featureExtractor.extractFeatures(textTestSet);
+        trainingSet
+            .stream()
+            .map(Base::getContent)
+            .forEach(System.out::println);
         
-        textTrainingSet = null;
-        textTestSet = null;
+//        List<Base> testSet = featureExtractor.extractFeatures(textTestSet);
         
-        Distance<Base> measurer = MainModel.getMeasure(MEASURE_NAME);
-        Classifier<Base> classifier = new KNN<>(K_VALUE, measurer);
-        List<String> classifiedLabels;
-        try
-        {
-            classifiedLabels = classifier.classify(trainingSet, testSet);
-        }
-        catch(ClassCastException e)
-        {
-            throw new RuntimeException("Invalid feature extractor and measurer combination.");
-        }
-        ResultCreator resultCreator = new ResultCreator();
-        ClassificationResult result = resultCreator.createResult(testSet, classifiedLabels);
-        System.out.println(result + "\n");
+//        textTrainingSet = null;
+//        textTestSet = null;
+//
+//        Distance<Base> measurer = MainModel.getMeasure(MEASURE_NAME);
+//        Classifier<Base> classifier = new KNN<>(K_VALUE, measurer);
+//        List<String> classifiedLabels = classifier.classify(trainingSet, testSet);
+//
+//        ResultCreator resultCreator = new ResultCreator();
+//        ClassificationResult result = resultCreator.createResult(testSet, classifiedLabels);
+//        System.out.println(result + "\n");
     }
     
     private static Extractor getFeatureExtractor(String name, List<Article> trainingSet)
@@ -90,7 +88,7 @@ public class MainModel
         }
     }
     
-    public static Distance getMeasure(String name)
+    private static Distance getMeasure(String name)
     {
         switch(name)
         {
