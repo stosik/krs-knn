@@ -11,13 +11,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class KNN<EntityT extends Base> implements Classifier<EntityT>
+public class KNN<T extends Base> implements Classifier<T>
 {
     private static int counter = 1;
     private final int K;
-    private final Distance<EntityT> measurer;
+    private final Distance<T> measurer;
     
-    public KNN(int k, Distance<EntityT> measurer)
+    public KNN(int k, Distance<T> measurer)
     {
         K = k;
         this.measurer = measurer;
@@ -27,10 +27,10 @@ public class KNN<EntityT extends Base> implements Classifier<EntityT>
      * Returns map of test entities with their new labels after classification process.
      */
     @Override
-    public List<String> classify(List<EntityT> trainingSet, List<EntityT> testSet)
+    public List<String> classify(List<T> trainingSet, List<T> testSet)
     {
         List<String> classifiedLabels = new ArrayList<>();
-        for(EntityT testEntity : testSet)
+        for(T testEntity : testSet)
         {
             System.out.println(counter++);
             String classifiedLabel = classifyOneEntity(trainingSet, testEntity);
@@ -42,7 +42,7 @@ public class KNN<EntityT extends Base> implements Classifier<EntityT>
     /**
      * Returns new label for test entity after classification process.
      */
-    private String classifyOneEntity(List<EntityT> trainingSet, EntityT testEntity)
+    private String classifyOneEntity(List<T> trainingSet, T testEntity)
     {
         List<Pair<Integer, Double>> similarities = findSimilarities(trainingSet, testEntity);
         Map<String, Integer> labelsFrequency = findLabelsFrequencies(trainingSet, similarities);
@@ -53,7 +53,7 @@ public class KNN<EntityT extends Base> implements Classifier<EntityT>
      * Returns list of pairs, where Integer is the index of entity in trainingSet and Double is the
      * similarity of test entity to that training entity. The list is sorted by similarity.
      */
-    private List<Pair<Integer, Double>> findSimilarities(List<EntityT> trainingSet, EntityT testEntity)
+    private List<Pair<Integer, Double>> findSimilarities(List<T> trainingSet, T testEntity)
     {
         return IntStream
             .range(0, trainingSet.size())
@@ -64,7 +64,7 @@ public class KNN<EntityT extends Base> implements Classifier<EntityT>
     /**
      * Returns map, where String is one of the K most similar labels and Integer is it's frequency.
      */
-    private Map<String, Integer> findLabelsFrequencies(List<EntityT> trainingSet, List<Pair<Integer, Double>> similarities)
+    private Map<String, Integer> findLabelsFrequencies(List<T> trainingSet, List<Pair<Integer, Double>> similarities)
     {
         return IntStream
             .range(0, K)

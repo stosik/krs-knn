@@ -27,15 +27,18 @@ public class EuclideanDistance implements Distance<WordVector>
         double sum = 0d;
         Map<Integer, Double> firstValues = first.getContent();
         Map<Integer, Double> secondValues = second.getContent();
+        
         Set<Integer> allKeys = new HashSet<>();
         allKeys.addAll(firstValues.keySet());
         allKeys.addAll(secondValues.keySet());
+        
         for(Integer key : allKeys)
         {
             double firstValue = firstValues.getOrDefault(key, 0d);
             double secondValue = secondValues.getOrDefault(key, 0d);
             sum += pow(firstValue - secondValue, 2);
         }
+        
         return sqrt(sum);
     }
     

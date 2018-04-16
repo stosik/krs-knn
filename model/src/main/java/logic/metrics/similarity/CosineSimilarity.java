@@ -21,9 +21,11 @@ public class CosineSimilarity implements Distance<WordVector>
         double productsSum = 0d, firstSquaresSum = 0d, secondSquaresSum = 0d;
         Map<Integer, Double> firstValues = first.getContent();
         Map<Integer, Double> secondValues = second.getContent();
+        
         Set<Integer> allKeys = new HashSet<>();
         allKeys.addAll(firstValues.keySet());
         allKeys.addAll(secondValues.keySet());
+        
         for (Integer key : allKeys) {
             double firstValue = firstValues.getOrDefault(key, 0d);
             double secondValue = secondValues.getOrDefault(key, 0d);
@@ -31,6 +33,7 @@ public class CosineSimilarity implements Distance<WordVector>
             firstSquaresSum += firstValue * firstValue;
             secondSquaresSum += secondValue * secondValue;
         }
+        
         return Math.abs(productsSum) / Math.sqrt(firstSquaresSum * secondSquaresSum);
     }
 }

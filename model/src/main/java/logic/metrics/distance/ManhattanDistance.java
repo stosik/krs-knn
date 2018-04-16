@@ -26,6 +26,7 @@ public class ManhattanDistance implements Distance<WordVector>
         double sum = 0d;
         Map<Integer, Double> firstValues = wv1.getContent();
         Map<Integer, Double> secondValues = wv2.getContent();
+        
         Set<Integer> allKeys = new HashSet<>();
         allKeys.addAll(firstValues.keySet());
         allKeys.addAll(secondValues.keySet());
@@ -35,6 +36,7 @@ public class ManhattanDistance implements Distance<WordVector>
             double secondValue = secondValues.getOrDefault(key, 0d);
             sum += abs(firstValue - secondValue);
         }
+        
         return sum;
     }
 }

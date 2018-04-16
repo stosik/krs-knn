@@ -57,7 +57,7 @@ public class MainModel
             .forEach(System.out::println);
         
 //        List<Base> testSet = featureExtractor.extractFeatures(textTestSet);
-        
+
 //        textTrainingSet = null;
 //        textTestSet = null;
 //
