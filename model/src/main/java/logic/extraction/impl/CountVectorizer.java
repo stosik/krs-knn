@@ -4,6 +4,7 @@ import logic.extraction.Extractor;
 import logic.model.entity.Article;
 import logic.model.entity.WordVector;
 import logic.utils.TextUtils;
+import lombok.Getter;
 
 import java.util.HashMap;
 import java.util.List;
@@ -12,6 +13,7 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+@Getter
 public class CountVectorizer implements Extractor<Article, WordVector>
 {
     private final Map<String, Integer> dictionary = new HashMap<>();
