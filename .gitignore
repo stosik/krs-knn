@@ -1,7 +1,8 @@
-.classpath
-.project
-.settings/
-model/target/
-gui/target/
-.iml
-.idea
+# Intellij
+.idea/
+*.iml
+*.iws
+
+# Maven
+log/
+target/
