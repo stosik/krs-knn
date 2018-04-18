@@ -46,7 +46,7 @@ public class SgmReader
         }
     }
     
-    public List<Article> loadReutersEntities()
+    public List<Article> loadReutersEntities(String label)
     {
         List<Article> entities = new ArrayList<>();
         try
@@ -54,7 +54,7 @@ public class SgmReader
             Files.walk(Paths.get(REUTERS_DIR))
                  .filter(Files::isRegularFile)
                  .map(Path::toFile)
-                 .forEach(reuterFile -> entities.addAll(sgmParser.parse(reuterFile)));
+                 .forEach(reuterFile -> entities.addAll(sgmParser.parse(reuterFile, label)));
         }
         catch(IOException e)
         {

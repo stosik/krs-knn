@@ -7,7 +7,7 @@ import java.util.List;
 
 public interface Parser
 {
-    List<Article> parse(File file);
+    List<Article> parse(File file, String label);
     
     List<Article> parse(String string);
 }

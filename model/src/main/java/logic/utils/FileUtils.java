@@ -13,7 +13,7 @@ public class FileUtils
     public static List<Article> loadReutersData(String label)
     {
         SgmReader sgmReader = new SgmReader(label);
-        return sgmReader.loadReutersEntities();
+        return sgmReader.loadReutersEntities(label);
     }
     
     public static void saveReutersDataToFile(List<Article> entities, String path)

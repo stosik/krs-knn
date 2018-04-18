@@ -3,8 +3,7 @@
 <?import com.jfoenix.controls.JFXButton?>
 <?import com.jfoenix.controls.JFXComboBox?>
 <?import com.jfoenix.controls.JFXTabPane?>
-<?import com.jfoenix.controls.JFXToolbar?>
-<?import java.lang.String?>
+<?import com.jfoenix.controls.JFXTextField?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.Tab?>
@@ -63,12 +62,6 @@
             </VBox>
             <VBox alignment="CENTER" prefHeight="100.0" prefWidth="150.0" HBox.hgrow="ALWAYS">
                <children>
-                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
-                     <children>
-                        <Label prefHeight="49.0" prefWidth="150.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Element:" />
-                        <JFXComboBox fx:id="elementCombo" onAction="#elementComboChanged" prefHeight="25.0" prefWidth="220.0" />
-                     </children>
-                  </HBox>
                   <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="309.0" VBox.vgrow="ALWAYS">
                      <children>
                         <Label prefHeight="48.0" prefWidth="150.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Extraction type:" HBox.hgrow="ALWAYS" />
@@ -81,11 +74,21 @@
                         <JFXComboBox fx:id="similarityCombo" onAction="#similarityComboChanged" prefHeight="25.0" prefWidth="220.0" />
                      </children>
                   </HBox>
+                  <HBox alignment="CENTER_LEFT" prefHeight="33.0" prefWidth="200.0" stylesheets="@css/main.css" VBox.vgrow="ALWAYS">
+                     <children>
+                        <Label prefHeight="48.0" prefWidth="150.0" styleClass="directory-label-main" text="K value: " HBox.hgrow="ALWAYS" />
+                        <JFXTextField fx:id="kValue" prefHeight="25.0" prefWidth="220.0" />
+                     </children>
+                  </HBox>
                </children>
             </VBox>
             <VBox alignment="CENTER" prefHeight="133.0" prefWidth="173.0" HBox.hgrow="NEVER">
                <children>
-                  <JFXButton fx:id="extractButton" buttonType="RAISED" onAction="#extractButtonClicked" ripplerFill="BLACK" styleClass="directory-button" stylesheets="@css/main.css" text="Extract" />
+                  <JFXButton fx:id="extractButton" buttonType="RAISED" onAction="#extractButtonClicked" ripplerFill="BLACK" styleClass="directory-button" stylesheets="@css/main.css" text="Extract">
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin></JFXButton>
+                  <JFXButton onAction="#knnButtonClicked" styleClass="directory-button" stylesheets="@css/main.css" text="Knn" />
                </children>
             </VBox>
          </children>
@@ -101,39 +104,33 @@
    <top>
       <VBox prefHeight="144.0" prefWidth="1000.0" BorderPane.alignment="CENTER">
          <children>
-             <VBox>
-                 <JFXToolbar prefHeight="30.0" prefWidth="1000.0" />
-             </VBox>
-            <HBox prefHeight="106.0" prefWidth="1015.0">
+            <HBox prefHeight="177.0" prefWidth="1000.0">
                <children>
                   <VBox alignment="CENTER" prefHeight="111.0" prefWidth="185.0">
                      <children>
-                        <JFXButton fx:id="directoryButton" buttonType="RAISED" onAction="#directoryButtonClicked" ripplerFill="BLACK" styleClass="directory-button" stylesheets="@css/main.css" text="Choose directory">
+                        <JFXButton buttonType="RAISED" onAction="#processSgmToXml" ripplerFill="BLACK" styleClass="directory-button" stylesheets="@css/main.css" text="Convert Sgm to Xml">
                            <VBox.margin>
                               <Insets left="20.0" />
                            </VBox.margin>
                         </JFXButton>
                      </children>
                   </VBox>
-                  <VBox alignment="CENTER_RIGHT" prefHeight="200.0" prefWidth="100.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="144.0" prefWidth="236.0">
                      <children>
-                        <Label contentDisplay="CENTER" styleClass="directory-label-main" stylesheets="@css/main.css" text="Directory:" />
+                        <JFXButton onAction="#loadArticles" styleClass="directory-button" stylesheets="@css/main.css" text="Load Articles from Xml" />
                      </children>
-                     <opaqueInsets>
-                        <Insets />
-                     </opaqueInsets>
+                     <HBox.margin>
+                        <Insets left="20.0" />
+                     </HBox.margin>
                   </VBox>
-                  <VBox alignment="CENTER_LEFT" prefHeight="111.0" prefWidth="328.0">
+                  <VBox alignment="CENTER_LEFT" prefHeight="144.0" prefWidth="286.0">
                      <children>
-                        <Label fx:id="directoryLabel" stylesheets="@css/main.css">
-                           <padding>
-                              <Insets left="10.0" />
-                           </padding>
-                           <styleClass>
-                              <String fx:value="directory-label-main" />
-                              <String fx:value="directory-label-text" />
-                           </styleClass>
-                        </Label>
+                        <HBox alignment="CENTER_LEFT" prefHeight="144.0" prefWidth="186.0" VBox.vgrow="ALWAYS">
+                           <children>
+                              <Label prefHeight="49.0" prefWidth="150.0" styleClass="directory-label-main" stylesheets="@css/main.css" text="Element:" />
+                              <JFXComboBox fx:id="elementCombo" onAction="#elementComboChanged" prefHeight="25.0" prefWidth="220.0" />
+                           </children>
+                        </HBox>
                      </children>
                   </VBox>
                </children>
