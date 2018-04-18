@@ -3,6 +3,7 @@ package Controllers;
 import com.jfoenix.controls.JFXButton;
 import com.jfoenix.controls.JFXComboBox;
 import com.jfoenix.controls.JFXTabPane;
+import com.jfoenix.controls.JFXTextField;
 import general.AppState;
 import general.ListItemArticle;
 import javafx.collections.FXCollections;
@@ -47,13 +48,13 @@ public class MainWindowController
     private static final String AFFIX_PATH = "./model/dict/en_US-chromium/en_US.aff";
     private static final String OUTPUT_PATH = "./model/data/text/reuters.xml";
     private static final String INPUT_PATH = "./model/data/text/reuters.xml";
-    private static final String EXTRACTOR_NAME = "count";
-    private static final String MEASURE_NAME = "euclidean";
     private static final int TRAINING_SET_PERCENTAGE = 60;
     private static final int K_VALUE = 10;
     
     private List<Article> articles = null;
     private ObservableList<ListItemArticle> listArticles = FXCollections.observableArrayList();
+    private List<Base> trainingSet;
+    private List<Base> testSet;
     
     /**
      * TextArea that display statistics
@@ -124,6 +125,9 @@ public class MainWindowController
     @FXML
     private JFXComboBox<String> countryComboBox;
     
+    @FXML
+    private JFXTextField kValue;
+    
     private Stage stage;
     
     @FXML
@@ -148,6 +152,8 @@ public class MainWindowController
         separateTab.setUserData(1);
 
         addListenerToTabPane();
+        
+        kValue.setText("10");
     }
     
     private void addListenerToTabPane()
@@ -252,30 +258,33 @@ public class MainWindowController
         int trainingSetElementsNumber = (int) (articles.size() * TRAINING_SET_PERCENTAGE * 0.01);
         List<Article> textTrainingSet = articles.subList(0, trainingSetElementsNumber);
         List<Article> textTestSet = articles.subList(trainingSetElementsNumber, articles.size());
-        Extractor featureExtractor = getFeatureExtractor(EXTRACTOR_NAME, textTrainingSet);
+        Extractor featureExtractor = getFeatureExtractor(extractionTypeCombo.getValue(), textTrainingSet);
     
         //Extract features from training and test set
-        List<Base> trainingSet = featureExtractor.extractFeatures(textTrainingSet);
-        System.out.println("Przed");
-        trainingSet
+        trainingSet = featureExtractor.extractFeatures(textTrainingSet);
+    
+        testSet = featureExtractor.extractFeatures(textTestSet);
+    
+        String extracted = trainingSet
             .stream()
             .map(e -> e.getContent().toString())
-            .forEach(e -> {
-                System.out.println(e);
-                mainTextArea.appendText(e);
-            });
-        System.out.println("Po");
-        
-        List<Base> testSet = featureExtractor.extractFeatures(textTestSet);
-
-        Distance<Base> measurer = getMeasure(MEASURE_NAME);
-        Classifier<Base> classifier = new KNN<>(K_VALUE, measurer);
+            .collect(Collectors.joining("\n"));
+        mainTextArea.clear();
+        mainTextArea.setText(extracted);
+    }
+    
+    @FXML
+    private void knnButtonClicked()
+    {
+        Distance<Base> measurer = getMeasure(similarityCombo.getValue());
+        Classifier<Base> classifier = new KNN<>(Integer.valueOf(kValue.getText()), measurer);
         List<String> classifiedLabels = classifier.classify(trainingSet, testSet);
-
-        
+    
+    
         ResultCreator resultCreator = new ResultCreator();
         ClassificationResult result = resultCreator.createResult(testSet, classifiedLabels);
-        System.out.println(result + "\n");
+        mainTextArea.clear();
+        mainTextArea.setText(result.toString());
     }
     
     @FXML
