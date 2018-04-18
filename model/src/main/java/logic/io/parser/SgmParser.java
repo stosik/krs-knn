@@ -9,11 +9,12 @@ import java.util.List;
 
 public class SgmParser implements Parser
 {
-    private final XmlParser xmlReutersParser = new XmlParser();
+    private XmlParser xmlReutersParser;
     
     @Override
-    public List<Article> parse(File file)
+    public List<Article> parse(File file, String label)
     {
+        xmlReutersParser = new XmlParser(label);
         String xmlString = convertSgmFileToXmlString(file);
         return xmlReutersParser.parse(xmlString);
     }

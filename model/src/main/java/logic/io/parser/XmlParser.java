@@ -23,18 +23,18 @@ public class XmlParser implements Parser
     private final String CONTENT_OUTER_NAME;
     private final String CONTENT_INNER_NAME;
     
-    public XmlParser()
+    public XmlParser(String label)
     {
         System.out.println(System.getProperty("user.dir"));
         Properties properties = PropertiesUtils.load(PROPERTIES_FILE);
-        LABEL_OUTER_NAME = properties.getProperty("LABEL_OUTER_NAME");
+        LABEL_OUTER_NAME = label.toUpperCase();
         LABEL_INNER_NAME = properties.getProperty("LABEL_INNER_NAME");
         CONTENT_OUTER_NAME = properties.getProperty("CONTENT_OUTER_NAME");
         CONTENT_INNER_NAME = properties.getProperty("CONTENT_INNER_NAME");
     }
     
     @Override
-    public List<Article> parse(File file)
+    public List<Article> parse(File file, String label)
     {
         SAXBuilder saxBuilder = new SAXBuilder();
         try
