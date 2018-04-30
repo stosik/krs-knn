@@ -5,8 +5,8 @@ import logic.model.entity.Article;
 import logic.model.enums.People;
 import logic.model.enums.Place;
 import logic.model.enums.Topic;
+import lombok.SneakyThrows;
 
-import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -26,6 +26,29 @@ public class SgmReader
     public SgmReader(String label)
     {
         loadFiltersFromFile(label);
+    }
+    
+    @SneakyThrows
+    public List<Article> loadReutersEntities(String label)
+    {
+        List<Article> entities = new ArrayList<>();
+        
+        Files.walk(Paths.get(REUTERS_DIR))
+             .filter(Files::isRegularFile)
+             .map(Path::toFile)
+             .forEach(reuterFile -> entities.addAll(sgmParser.parse(reuterFile, label)));
+        
+        if(filters.size() > 0)
+        {
+            return entities
+                .stream()
+                .filter(e -> filters.contains(e.getLabel()))
+                .collect(Collectors.toList());
+        }
+        else
+        {
+            return entities;
+        }
     }
     
     private void loadFiltersFromFile(String label)
@@ -49,34 +72,6 @@ public class SgmReader
                 break;
             default:
                 throw new RuntimeException("No valid label passed");
-        }
-    }
-    
-    public List<Article> loadReutersEntities(String label)
-    {
-        List<Article> entities = new ArrayList<>();
-        try
-        {
-            Files.walk(Paths.get(REUTERS_DIR))
-                 .filter(Files::isRegularFile)
-                 .map(Path::toFile)
-                 .forEach(reuterFile -> entities.addAll(sgmParser.parse(reuterFile, label)));
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-    
-        if(filters.size() > 0)
-        {
-            return entities
-                .stream()
-                .filter(e -> filters.contains(e.getLabel()))
-                .collect(Collectors.toList());
-        }
-        else
-        {
-            return entities;
         }
     }
 }

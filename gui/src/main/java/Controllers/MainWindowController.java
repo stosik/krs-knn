@@ -34,6 +34,7 @@ import logic.model.Base;
 import logic.model.entity.Article;
 import logic.utils.FileUtils;
 import logic.utils.PreprocessUtils;
+import lombok.val;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -201,7 +202,7 @@ public class MainWindowController
     
     private void addCountriesToComboBox()
     {
-        List<String> labels = articles
+        val labels = articles
             .stream()
             .map(Article::getLabel)
             .distinct()
@@ -227,7 +228,9 @@ public class MainWindowController
         String label = elementCombo.getValue().toLowerCase();
         if(label.equals("people"))
         {
-            articles = PreprocessUtils.preprocessTextEntities(FileUtils.loadXmlData(INPUT_PATH_OWN), AFFIX_PATH, DICTIONARY_PATH);
+            val ownArticles = PreprocessUtils.preprocessTextEntities(FileUtils.loadXmlData(INPUT_PATH_OWN), AFFIX_PATH, DICTIONARY_PATH);
+            Collections.shuffle(ownArticles, new Random(System.nanoTime()));
+            articles = ownArticles;
         }
         else
         {
@@ -239,10 +242,11 @@ public class MainWindowController
     
     private List<ListItemArticle> mapToPairList(Map<String, Integer> freqMap)
     {
-        List<ListItemArticle> list = freqMap.entrySet()
-                                            .stream()
-                                            .map(e -> new ListItemArticle(e.getKey(), e.getValue()))
-                                            .collect(Collectors.toList());
+        val list = freqMap
+            .entrySet()
+            .stream()
+            .map(e -> new ListItemArticle(e.getKey(), e.getValue()))
+            .collect(Collectors.toList());
         
         list.sort((p, n) -> {
             if(p.getOccurence() > n.getOccurence())
