@@ -2,6 +2,7 @@ package logic.io;
 
 import logic.io.parser.SgmParser;
 import logic.model.entity.Article;
+import logic.model.enums.People;
 import logic.model.enums.Place;
 import logic.model.enums.Topic;
 
@@ -41,6 +42,10 @@ public class SgmReader
                       .map(Place::getPlace)
                       .forEach(filters::add);
                 break;
+            case "people":
+                Arrays.stream(People.values())
+                      .map(People::getPeople)
+                      .forEach(filters::add);
             default:
                 throw new RuntimeException("No valid label passed");
         }

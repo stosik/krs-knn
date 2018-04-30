@@ -34,6 +34,7 @@ import logic.model.Base;
 import logic.model.entity.Article;
 import logic.utils.FileUtils;
 import logic.utils.PreprocessUtils;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.List;
@@ -139,18 +140,18 @@ public class MainWindowController
         
         extractionTypeCombo.getItems().addAll(new String("count"), new String("tfidf"), new String("freq"));
         extractionTypeCombo.getSelectionModel().select(0);
-    
+        
         similarityCombo.getItems().addAll(new String("euclidean"), new String("chebyshev"), new String("manhattan"), new String("cosine"), new String("ngram"));
         similarityCombo.getSelectionModel().select(0);
         
         wordColumn.setCellValueFactory(new PropertyValueFactory<ListItemArticle, String>("word"));
         occurencesColumn.setCellValueFactory(new PropertyValueFactory<ListItemArticle, Integer>("occurence"));
-
+        
         tableView.setItems(this.listArticles);
-
+        
         unifiedTab.setUserData(0);
         separateTab.setUserData(1);
-
+        
         addListenerToTabPane();
         
         kValue.setText("10");
@@ -158,36 +159,39 @@ public class MainWindowController
     
     private void addListenerToTabPane()
     {
-        wordsTabPane.getSelectionModel().selectedItemProperty().addListener(
-            (ov, previous, next) -> {
-                countryComboBoxChanged();
-            }
-                                                                           );
+        wordsTabPane
+            .getSelectionModel()
+            .selectedItemProperty()
+            .addListener((ov, previous, next) -> countryComboBoxChanged());
     }
     
     private void generateFreqList(List<Article> articles)
     {
         Map<String, Integer> words = generateCountMap(articles);
         this.updateList(words);
+        
         int wordsCount = words
             .values()
             .stream()
             .mapToInt(Integer::intValue)
             .sum();
-
+        
         this.updateStatistics(wordsCount, articles.size());
     }
     
     private Map<String, Integer> generateCountMap(List<Article> articles)
     {
         Map<String, Integer> wordsCount = new HashMap<>();
-        for (Article article : articles)
+        for(Article article : articles)
         {
-            for (String word: article.getContent().split(" "))
+            for(String word : article.getContent().split(" "))
             {
-                if (wordsCount.containsKey(word)) {
+                if(wordsCount.containsKey(word))
+                {
                     wordsCount.put(word, wordsCount.get(word) + 1);
-                } else {
+                }
+                else
+                {
                     wordsCount.put(word, 1);
                 }
             }
@@ -202,6 +206,7 @@ public class MainWindowController
             .map(Article::getLabel)
             .distinct()
             .collect(Collectors.toList());
+        
         countryComboBox.getItems().addAll(labels);
         countryComboBox.getSelectionModel().select(0);
     }
@@ -227,15 +232,24 @@ public class MainWindowController
     private List<ListItemArticle> mapToPairList(Map<String, Integer> freqMap)
     {
         List<ListItemArticle> list = freqMap.entrySet()
-                      .stream()
-                      .map(e -> new ListItemArticle(e.getKey(), e.getValue()))
-                      .collect(Collectors.toList());
+                                            .stream()
+                                            .map(e -> new ListItemArticle(e.getKey(), e.getValue()))
+                                            .collect(Collectors.toList());
         
         list.sort((p, n) -> {
-                if(p.getOccurence() > n.getOccurence()) return -1;
-                else if(p.getOccurence() < n.getOccurence()) return 1;
-                else return 0;
-            });
+            if(p.getOccurence() > n.getOccurence())
+            {
+                return -1;
+            }
+            else if(p.getOccurence() < n.getOccurence())
+            {
+                return 1;
+            }
+            else
+            {
+                return 0;
+            }
+        });
         
         return list;
     }
@@ -259,16 +273,17 @@ public class MainWindowController
         List<Article> textTrainingSet = articles.subList(0, trainingSetElementsNumber);
         List<Article> textTestSet = articles.subList(trainingSetElementsNumber, articles.size());
         Extractor featureExtractor = getFeatureExtractor(extractionTypeCombo.getValue(), textTrainingSet);
-    
+        
         //Extract features from training and test set
         trainingSet = featureExtractor.extractFeatures(textTrainingSet);
-    
+        
         testSet = featureExtractor.extractFeatures(textTestSet);
-    
+        
         String extracted = trainingSet
             .stream()
             .map(e -> e.getContent().toString())
             .collect(Collectors.joining("\n"));
+        
         mainTextArea.clear();
         mainTextArea.setText(extracted);
     }
@@ -279,8 +294,7 @@ public class MainWindowController
         Distance<Base> measurer = getMeasure(similarityCombo.getValue());
         Classifier<Base> classifier = new KNN<>(Integer.valueOf(kValue.getText()), measurer);
         List<String> classifiedLabels = classifier.classify(trainingSet, testSet);
-    
-    
+        
         ResultCreator resultCreator = new ResultCreator();
         ClassificationResult result = resultCreator.createResult(testSet, classifiedLabels);
         mainTextArea.clear();
@@ -290,7 +304,7 @@ public class MainWindowController
     @FXML
     private void elementComboChanged()
     {
-
+    
     }
     
     @FXML
@@ -302,10 +316,12 @@ public class MainWindowController
             return;
         }
         String value = countryComboBox.getValue();
+        
         List<Article> filtered = articles
             .stream()
             .filter(e -> e.getLabel().equals(value))
             .collect(Collectors.toList());
+        
         this.generateFreqList(filtered);
     }
     
