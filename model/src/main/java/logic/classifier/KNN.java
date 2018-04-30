@@ -23,9 +23,6 @@ public class KNN<T extends Base> implements Classifier<T>
         this.measurer = measurer;
     }
     
-    /**
-     * Returns map of test entities with their new labels after classification process.
-     */
     @Override
     public List<String> classify(List<T> trainingSet, List<T> testSet)
     {
@@ -39,9 +36,6 @@ public class KNN<T extends Base> implements Classifier<T>
         return classifiedLabels;
     }
     
-    /**
-     * Returns new label for test entity after classification process.
-     */
     private String classifyOneEntity(List<T> trainingSet, T testEntity)
     {
         List<Pair<Integer, Double>> similarities = findSimilarities(trainingSet, testEntity);
@@ -49,10 +43,6 @@ public class KNN<T extends Base> implements Classifier<T>
         return findClassifiedLabel(labelsFrequency);
     }
     
-    /**
-     * Returns list of pairs, where Integer is the index of entity in trainingSet and Double is the
-     * similarity of test entity to that training entity. The list is sorted by similarity.
-     */
     private List<Pair<Integer, Double>> findSimilarities(List<T> trainingSet, T testEntity)
     {
         return IntStream
@@ -61,9 +51,6 @@ public class KNN<T extends Base> implements Classifier<T>
             .sorted(measurer.getComparator()).collect(Collectors.toList());
     }
     
-    /**
-     * Returns map, where String is one of the K most similar labels and Integer is it's frequency.
-     */
     private Map<String, Integer> findLabelsFrequencies(List<T> trainingSet, List<Pair<Integer, Double>> similarities)
     {
         return IntStream
@@ -72,9 +59,6 @@ public class KNN<T extends Base> implements Classifier<T>
             .collect(Collectors.toMap(label -> label, label -> 1, (a, b) -> a + b, LinkedHashMap::new));
     }
     
-    /**
-     * Returns new label for test entity, which is the most frequent one.
-     */
     private String findClassifiedLabel(Map<String, Integer> labelsFrequency)
     {
         Integer maxFrequency = 0;
