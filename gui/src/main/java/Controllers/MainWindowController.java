@@ -50,7 +50,6 @@ public class MainWindowController
     private static final String OUTPUT_PATH = "./model/data/text/reuters.xml";
     private static final String INPUT_PATH = "./model/data/text/reuters.xml";
     private static final int TRAINING_SET_PERCENTAGE = 60;
-    private static final int K_VALUE = 10;
     
     private List<Article> articles = null;
     private ObservableList<ListItemArticle> listArticles = FXCollections.observableArrayList();
