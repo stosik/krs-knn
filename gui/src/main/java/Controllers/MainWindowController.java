@@ -49,6 +49,7 @@ public class MainWindowController
     private static final String AFFIX_PATH = "./model/dict/en_US-chromium/en_US.aff";
     private static final String OUTPUT_PATH = "./model/data/text/reuters.xml";
     private static final String INPUT_PATH = "./model/data/text/reuters.xml";
+    private static final String INPUT_PATH_OWN = "./model/data/text/own.xml";
     private static final int TRAINING_SET_PERCENTAGE = 60;
     
     private List<Article> articles = null;
@@ -223,7 +224,15 @@ public class MainWindowController
     @FXML
     private void loadArticles()
     {
-        articles = FileUtils.loadXmlData(INPUT_PATH);
+        String label = elementCombo.getValue().toLowerCase();
+        if(label.equals("people"))
+        {
+            articles = PreprocessUtils.preprocessTextEntities(FileUtils.loadXmlData(INPUT_PATH_OWN), AFFIX_PATH, DICTIONARY_PATH);
+        }
+        else
+        {
+            articles = FileUtils.loadXmlData(INPUT_PATH);
+        }
         generateFreqList(articles);
         addCountriesToComboBox();
     }

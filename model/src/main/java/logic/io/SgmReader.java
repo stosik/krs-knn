@@ -22,7 +22,6 @@ public class SgmReader
     private final SgmParser sgmParser = new SgmParser();
     private final Set<String> filters = new HashSet<>();
     private static final String REUTERS_DIR = "./model/data/text/sgm";
-    private static final String REUTERS_DIR_OWN = "./model/data/text/sgm-own";
     
     public SgmReader(String label)
     {

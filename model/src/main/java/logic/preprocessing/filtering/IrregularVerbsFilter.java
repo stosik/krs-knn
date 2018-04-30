@@ -1,5 +1,6 @@
 package logic.preprocessing.filtering;
 
+import lombok.SneakyThrows;
 import org.apache.lucene.analysis.TokenFilter;
 import org.apache.lucene.analysis.TokenStream;
 import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
@@ -13,26 +14,9 @@ import java.util.stream.Collectors;
 
 public class IrregularVerbsFilter extends TokenFilter
 {
+    private static final String HYPHEN = "-";
     private static final String IRREGULAR_VERBS_FILE = "./model/dict/irregular-verbs.txt";
     private static final Map<String, String> dictionary = initializeDictionary();
-    
-    private static Map<String, String> initializeDictionary()
-    {
-        Path path = FileSystems.getDefault().getPath(IRREGULAR_VERBS_FILE);
-        Map<String, String> dictionary = null;
-        try
-        {
-            dictionary = Files.lines(path)
-                              .filter(s -> s.matches("^\\w+-\\w+"))
-                              .collect(Collectors.toMap(k -> k.split("-")[0], v -> v.split("-")[1]));
-        }
-        catch(IOException e)
-        {
-            e.printStackTrace();
-        }
-        
-        return dictionary;
-    }
     
     private final CharTermAttribute termAtt;
     
@@ -40,6 +24,20 @@ public class IrregularVerbsFilter extends TokenFilter
     {
         super(input);
         termAtt = input.getAttribute(CharTermAttribute.class);
+    }
+    
+    @SneakyThrows
+    private static Map<String, String> initializeDictionary()
+    {
+        Path path = FileSystems.getDefault().getPath(IRREGULAR_VERBS_FILE);
+        Map<String, String> dictionary;
+        
+        dictionary = Files
+            .lines(path)
+            .filter(s -> s.matches("^\\w+-\\w+"))
+            .collect(Collectors.toMap(k -> k.split(HYPHEN)[0], v -> v.split(HYPHEN)[1]));
+        
+        return dictionary;
     }
     
     @Override
