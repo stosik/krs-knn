@@ -135,13 +135,13 @@ public class MainWindowController
     public void initialize()
     {
         this.stage = AppState.getInstance().getPrimaryStage();
-        elementCombo.getItems().addAll(new String("Places"), new String("Topics"));
+        elementCombo.getItems().addAll("Places", "Topics", "People");
         elementCombo.getSelectionModel().select(0);
         
-        extractionTypeCombo.getItems().addAll(new String("count"), new String("tfidf"), new String("freq"));
+        extractionTypeCombo.getItems().addAll("count", "tfidf", "freq");
         extractionTypeCombo.getSelectionModel().select(0);
         
-        similarityCombo.getItems().addAll(new String("euclidean"), new String("chebyshev"), new String("manhattan"), new String("cosine"), new String("ngram"));
+        similarityCombo.getItems().addAll("euclidean", "chebyshev", "manhattan", "cosine", "ngram");
         similarityCombo.getSelectionModel().select(0);
         
         wordColumn.setCellValueFactory(new PropertyValueFactory<ListItemArticle, String>("word"));
