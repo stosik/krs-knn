@@ -3,6 +3,7 @@ package logic.metrics.similarity;
 import javafx.util.Pair;
 import logic.metrics.Distance;
 import logic.model.entity.FrequencyMatrix;
+import logic.model.entity.NumberVector;
 
 import java.util.Comparator;
 import java.util.Map;
@@ -56,5 +57,11 @@ public class Ngram implements Distance<FrequencyMatrix>
         }
         
         return (double) actualNgramsCount / (double) possibleNgramsCount;
+    }
+    
+    @Override
+    public double distanceNumber(NumberVector first, NumberVector second)
+    {
+        return 0;
     }
 }

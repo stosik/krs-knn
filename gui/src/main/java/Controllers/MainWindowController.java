@@ -17,7 +17,7 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 import logic.classifier.Classifier;
-import logic.classifier.KNN;
+import logic.classifier.KnnText;
 import logic.classifier.result.ClassificationResult;
 import logic.classifier.result.ResultCreator;
 import logic.extraction.Extractor;
@@ -136,7 +136,7 @@ public class MainWindowController
     public void initialize()
     {
         this.stage = AppState.getInstance().getPrimaryStage();
-        elementCombo.getItems().addAll("Places", "Topics", "People");
+        elementCombo.getItems().addAll("Places", "Topics", "People", "Number");
         elementCombo.getSelectionModel().select(0);
         
         extractionTypeCombo.getItems().addAll("count", "tfidf", "freq");
@@ -147,14 +147,10 @@ public class MainWindowController
         
         wordColumn.setCellValueFactory(new PropertyValueFactory<ListItemArticle, String>("word"));
         occurencesColumn.setCellValueFactory(new PropertyValueFactory<ListItemArticle, Integer>("occurence"));
-        
         tableView.setItems(this.listArticles);
-        
         unifiedTab.setUserData(0);
         separateTab.setUserData(1);
-        
         addListenerToTabPane();
-        
         kValue.setText("10");
     }
     
@@ -280,15 +276,12 @@ public class MainWindowController
     @FXML
     private void extractButtonClicked()
     {
-        //create test and training set
         int trainingSetElementsNumber = (int) (articles.size() * TRAINING_SET_PERCENTAGE * 0.01);
         List<Article> textTrainingSet = articles.subList(0, trainingSetElementsNumber);
         List<Article> textTestSet = articles.subList(trainingSetElementsNumber, articles.size());
         Extractor featureExtractor = getFeatureExtractor(extractionTypeCombo.getValue(), textTrainingSet);
         
-        //Extract features from training and test set
         trainingSet = featureExtractor.extractFeatures(textTrainingSet);
-        
         testSet = featureExtractor.extractFeatures(textTestSet);
         
         String extracted = trainingSet
@@ -304,7 +297,7 @@ public class MainWindowController
     private void knnButtonClicked()
     {
         Distance<Base> measurer = getMeasure(similarityCombo.getValue());
-        Classifier<Base> classifier = new KNN<>(Integer.valueOf(kValue.getText()), measurer);
+        Classifier<Base> classifier = new KnnText<>(Integer.valueOf(kValue.getText()), measurer);
         List<String> classifiedLabels = classifier.classify(trainingSet, testSet);
         
         ResultCreator resultCreator = new ResultCreator();

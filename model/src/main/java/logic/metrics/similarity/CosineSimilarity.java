@@ -2,6 +2,7 @@ package logic.metrics.similarity;
 
 import javafx.util.Pair;
 import logic.metrics.Distance;
+import logic.model.entity.NumberVector;
 import logic.model.entity.WordVector;
 
 import java.util.Comparator;
@@ -35,5 +36,11 @@ public class CosineSimilarity implements Distance<WordVector>
         }
         
         return Math.abs(productsSum) / Math.sqrt(firstSquaresSum * secondSquaresSum);
+    }
+    
+    @Override
+    public double distanceNumber(NumberVector first, NumberVector second)
+    {
+        return 0;
     }
 }

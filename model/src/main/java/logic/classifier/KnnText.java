@@ -3,6 +3,7 @@ package logic.classifier;
 import javafx.util.Pair;
 import logic.metrics.Distance;
 import logic.model.Base;
+import lombok.val;
 
 import java.util.ArrayList;
 import java.util.LinkedHashMap;
@@ -11,13 +12,13 @@ import java.util.Map;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-public class KNN<T extends Base> implements Classifier<T>
+public class KnnText<T extends Base> implements Classifier<T>
 {
     private static int counter = 1;
     private final int K;
     private final Distance<T> measurer;
     
-    public KNN(int k, Distance<T> measurer)
+    public KnnText(int k, Distance<T> measurer)
     {
         K = k;
         this.measurer = measurer;
@@ -27,6 +28,7 @@ public class KNN<T extends Base> implements Classifier<T>
     public List<String> classify(List<T> trainingSet, List<T> testSet)
     {
         List<String> classifiedLabels = new ArrayList<>();
+        
         for(T testEntity : testSet)
         {
             System.out.println(counter++);
@@ -38,8 +40,9 @@ public class KNN<T extends Base> implements Classifier<T>
     
     private String classifyOneEntity(List<T> trainingSet, T testEntity)
     {
-        List<Pair<Integer, Double>> similarities = findSimilarities(trainingSet, testEntity);
-        Map<String, Integer> labelsFrequency = findLabelsFrequencies(trainingSet, similarities);
+        val similarities = findSimilarities(trainingSet, testEntity);
+        val labelsFrequency = findLabelsFrequencies(trainingSet, similarities);
+        
         return findClassifiedLabel(labelsFrequency);
     }
     
