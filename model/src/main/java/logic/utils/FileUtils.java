@@ -45,9 +45,7 @@ public class FileUtils
     public static List<NumberVector> loadNumbers(String path)
     {
         List<NumberVector> numberVectors = new ArrayList<>();
-        
-        extractLines(path)
-            .forEach(createNextEntry(numberVectors));
+        extractLines(path).forEach(createNextEntry(numberVectors));
         
         return numberVectors;
     }

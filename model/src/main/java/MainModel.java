@@ -11,6 +11,7 @@ import logic.metrics.similarity.CosineSimilarity;
 import logic.metrics.similarity.Ngram;
 import logic.model.Base;
 import logic.model.entity.NumberVector;
+import logic.utils.DataUtils;
 import logic.utils.FileUtils;
 
 import java.util.Collections;
@@ -27,9 +28,9 @@ public class MainModel
     
     public static void main(String[] args)
     {
-        List<NumberVector> numberVectors = FileUtils.loadNumbers(INPUT_PATH);
+        List<NumberVector> numberVectors = DataUtils.normalize(FileUtils.loadNumbers(INPUT_PATH));
         Collections.shuffle(numberVectors, new Random(System.nanoTime()));
-    
+        
         int trainingSetElementsNumber = (int) (numberVectors.size() * TRAINING_SET_PERCENTAGE * 0.01);
         List<NumberVector> trainingSet = numberVectors.subList(0, trainingSetElementsNumber);
         List<NumberVector> testSet = numberVectors.subList(trainingSetElementsNumber, numberVectors.size());
