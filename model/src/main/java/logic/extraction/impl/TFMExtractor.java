@@ -8,7 +8,7 @@ import logic.utils.TextUtils;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public class TermFrequencyMatrixExtractor implements Extractor<Article, FrequencyMatrix>
+public class TFMExtractor implements Extractor<Article, FrequencyMatrix>
 {
     
     @Override

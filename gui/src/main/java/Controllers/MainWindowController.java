@@ -21,9 +21,9 @@ import logic.classifier.KnnText;
 import logic.classifier.result.ClassificationResult;
 import logic.classifier.result.ResultCreator;
 import logic.extraction.Extractor;
-import logic.extraction.impl.CountVectorizer;
-import logic.extraction.impl.TermFrequencyMatrixExtractor;
-import logic.extraction.impl.TfidfVectorizer;
+import logic.extraction.impl.CountExtractor;
+import logic.extraction.impl.TFMExtractor;
+import logic.extraction.impl.TfidfExtractor;
 import logic.metrics.Distance;
 import logic.metrics.distance.ChebyshevDistance;
 import logic.metrics.distance.EuclideanDistance;
@@ -346,11 +346,11 @@ public class MainWindowController
         switch(name)
         {
             case "count":
-                return new CountVectorizer(trainingSet);
+                return new CountExtractor(trainingSet);
             case "tfidf":
-                return new TfidfVectorizer(trainingSet);
+                return new TfidfExtractor(trainingSet);
             case "freq":
-                return new TermFrequencyMatrixExtractor();
+                return new TFMExtractor();
             default:
                 throw new RuntimeException("Invalid feature extractor name.");
         }

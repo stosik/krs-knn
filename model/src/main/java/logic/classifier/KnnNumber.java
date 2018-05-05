@@ -15,7 +15,6 @@ import java.util.stream.IntStream;
 
 public class KnnNumber implements Classifier<NumberVector>
 {
-    private static int counter = 1;
     private final int K;
     private final Distance<Base> measurer;
     

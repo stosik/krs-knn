@@ -12,14 +12,14 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TfidfVectorizer implements Extractor<Article, WordVector>
+public class TfidfExtractor implements Extractor<Article, WordVector>
 {
     
     private final int N;
     private final Map<String, Integer> dictionary = new HashMap<>();
     private final Map<String, Integer> wordOccurencesCounts = new HashMap<>();
     
-    public TfidfVectorizer(List<Article> trainingEntities)
+    public TfidfExtractor(List<Article> trainingEntities)
     {
         fillDictionary(trainingEntities);
         N = trainingEntities.size();
