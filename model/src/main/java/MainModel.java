@@ -21,10 +21,10 @@ import java.util.Random;
 public class MainModel
 {
     
-    private static final String INPUT_PATH = "./model/data/number/iris.data";
+    private static final String INPUT_PATH = "./model/data/number/abalone.data";
     private static final String MEASURE_NAME = "chebyshev";
     private static final int TRAINING_SET_PERCENTAGE = 70;
-    private static final int K_VALUE = 5;
+    private static final int K_VALUE = 10;
     
     public static void main(String[] args)
     {

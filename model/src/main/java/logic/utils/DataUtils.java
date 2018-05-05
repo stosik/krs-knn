@@ -21,11 +21,11 @@ public class DataUtils
         val minInColumn = findMinInColumn(content);
         val maxInColumn = findMaxInColumn(content);
         
-        for(int i = 0; i < content.get(0).size(); i++)
+        for(int i = 0; i < content.size(); i++)
         {
-            for(int j = 0; j < content.size(); j++)
+            for(int j = 0; j < content.get(i).size(); j++)
             {
-                val z = content.get(i).get(j) - minInColumn.get(i) / maxInColumn.get(i) - minInColumn.get(i);
+                val z = (content.get(i).get(j) - minInColumn.get(j)) / (maxInColumn.get(j) - minInColumn.get(j));
                 content.set(i, content.get(i)).set(j, z);
             }
         }
@@ -36,35 +36,35 @@ public class DataUtils
             .collect(Collectors.toList());
     }
     
-    private static List<Double> findMaxInColumn(List<List<Double>> content)
-    {
-        List<Double> columnMax = new ArrayList<>();
-        for(int i = 0; i < content.get(0).size(); i++)
-        {
-            List<Double> temp = new ArrayList<>();
-            for(int j = 0; j < content.size() - 1; j++)
-            {
-                temp.add(content.get(i).get(j));
-            }
-            columnMax.add(Collections.max(temp));
-        }
-        
-        return columnMax;
-    }
-    
     private static List<Double> findMinInColumn(List<List<Double>> content)
     {
         List<Double> columnMin = new ArrayList<>();
         for(int i = 0; i < content.get(0).size(); i++)
         {
             List<Double> temp = new ArrayList<>();
-            for(int j = 0; j < content.size() - 1; j++)
+            for(List<Double> aContent : content)
             {
-                temp.add(content.get(i).get(j));
+                temp.add(aContent.get(i));
             }
             columnMin.add(Collections.min(temp));
         }
         
         return columnMin;
+    }
+    
+    private static List<Double> findMaxInColumn(List<List<Double>> content)
+    {
+        List<Double> columnMax = new ArrayList<>();
+        for(int i = 0; i < content.get(0).size(); i++)
+        {
+            List<Double> temp = new ArrayList<>();
+            for(List<Double> aContent : content)
+            {
+                temp.add(aContent.get(i));
+            }
+            columnMax.add(Collections.max(temp));
+        }
+        
+        return columnMax;
     }
 }
