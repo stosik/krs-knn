@@ -11,7 +11,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 @Getter
@@ -19,18 +18,18 @@ public class CountExtractor implements Extractor<Article, WordVector>
 {
     private final Map<String, Integer> dictionary = new HashMap<>();
     
-    public CountExtractor(List<Article> entities)
+    public CountExtractor(List<Article> articles)
     {
-        fillDictionary(entities);
+        fillDictionary(articles);
     }
     
-    private void fillDictionary(List<Article> trainingArticles)
+    private void fillDictionary(List<Article> articles)
     {
         Integer totalWordsCount = 0;
-        for(Article article : trainingArticles)
+        for(Article article : articles)
         {
-            Set<String> entityUniqueWords = TextUtils.getUniqueWords(article);
-            for(String word : entityUniqueWords)
+            val uniqueWords = TextUtils.getUniqueWords(article);
+            for(String word : uniqueWords)
             {
                 if(!dictionary.containsKey(word))
                 {
@@ -41,9 +40,9 @@ public class CountExtractor implements Extractor<Article, WordVector>
     }
     
     @Override
-    public List<WordVector> extractFeatures(List<Article> testEntities)
+    public List<WordVector> extractFeatures(List<Article> articles)
     {
-        return testEntities
+        return articles
             .stream()
             .map(this::extractFeatures)
             .collect(Collectors.toList());

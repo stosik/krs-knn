@@ -23,13 +23,14 @@ import logic.classifier.result.ResultCreator;
 import logic.extraction.Extractor;
 import logic.extraction.impl.CountExtractor;
 import logic.extraction.impl.TFMExtractor;
-import logic.extraction.impl.TfidfExtractor;
+import logic.extraction.impl.TFIDFExtractor;
 import logic.metrics.Distance;
 import logic.metrics.distance.ChebyshevDistance;
 import logic.metrics.distance.EuclideanDistance;
 import logic.metrics.distance.ManhattanDistance;
 import logic.metrics.similarity.CosineSimilarity;
 import logic.metrics.similarity.Ngram;
+import logic.metrics.similarity.TFMCosine;
 import logic.model.Base;
 import logic.model.entity.Article;
 import logic.utils.FileUtils;
@@ -142,7 +143,7 @@ public class MainWindowController
         extractionTypeCombo.getItems().addAll("count", "tfidf", "freq");
         extractionTypeCombo.getSelectionModel().select(0);
         
-        similarityCombo.getItems().addAll("euclidean", "chebyshev", "manhattan", "cosine", "ngram");
+        similarityCombo.getItems().addAll("euclidean", "chebyshev", "manhattan", "term", "cosine", "ngram");
         similarityCombo.getSelectionModel().select(0);
         
         wordColumn.setCellValueFactory(new PropertyValueFactory<ListItemArticle, String>("word"));
@@ -302,6 +303,7 @@ public class MainWindowController
         
         ResultCreator resultCreator = new ResultCreator();
         ClassificationResult result = resultCreator.createResult(testSet, classifiedLabels);
+        System.out.println(result + "\n");
         mainTextArea.clear();
         mainTextArea.setText(result.toString());
     }
@@ -348,7 +350,7 @@ public class MainWindowController
             case "count":
                 return new CountExtractor(trainingSet);
             case "tfidf":
-                return new TfidfExtractor(trainingSet);
+                return new TFIDFExtractor(trainingSet);
             case "freq":
                 return new TFMExtractor();
             default:
@@ -366,6 +368,8 @@ public class MainWindowController
                 return new ChebyshevDistance();
             case "manhattan":
                 return new ManhattanDistance();
+            case "term" :
+                return new TFMCosine();
             case "cosine":
                 return new CosineSimilarity();
             case "ngram":

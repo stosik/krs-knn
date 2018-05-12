@@ -22,13 +22,13 @@ public class MainModel
 {
     
     private static final String INPUT_PATH = "./model/data/number/abalone.data";
-    private static final String MEASURE_NAME = "chebyshev";
+    private static final String MEASURE_NAME = "cos";
     private static final int TRAINING_SET_PERCENTAGE = 70;
-    private static final int K_VALUE = 10;
+    private static final int K_VALUE = 3;
     
     public static void main(String[] args)
     {
-        List<NumberVector> numberVectors = DataUtils.normalize(FileUtils.loadNumbers(INPUT_PATH));
+        List<NumberVector> numberVectors = FileUtils.loadNumbers(INPUT_PATH);
         Collections.shuffle(numberVectors, new Random(System.nanoTime()));
         
         int trainingSetElementsNumber = (int) (numberVectors.size() * TRAINING_SET_PERCENTAGE * 0.01);

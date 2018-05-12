@@ -12,23 +12,23 @@ import java.util.Map;
 import java.util.Set;
 import java.util.stream.Collectors;
 
-public class TfidfExtractor implements Extractor<Article, WordVector>
+public class TFIDFExtractor implements Extractor<Article, WordVector>
 {
     
     private final int N;
     private final Map<String, Integer> dictionary = new HashMap<>();
     private final Map<String, Integer> wordOccurencesCounts = new HashMap<>();
     
-    public TfidfExtractor(List<Article> trainingEntities)
+    public TFIDFExtractor(List<Article> articles)
     {
-        fillDictionary(trainingEntities);
-        N = trainingEntities.size();
+        fillDictionary(articles);
+        N = articles.size();
     }
     
-    private void fillDictionary(List<Article> trainingArticles)
+    private void fillDictionary(List<Article> articles)
     {
         Integer totalWordsCount = 0;
-        for(Article entity : trainingArticles)
+        for(Article entity : articles)
         {
             Set<String> entityUniqueWords = TextUtils.getUniqueWords(entity);
             for(String word : entityUniqueWords)
@@ -51,11 +51,11 @@ public class TfidfExtractor implements Extractor<Article, WordVector>
             .collect(Collectors.toList());
     }
     
-    private WordVector extractFeatures(Article testEntity)
+    private WordVector extractFeatures(Article article)
     {
         Map<Integer, Double> features = new HashMap<>();
         
-        Map<String, Long> allWordsCounts = TextUtils.getAllWordsCounts(testEntity);
+        Map<String, Long> allWordsCounts = TextUtils.getAllWordsCounts(article);
         Long maxWordCount = Collections.max(allWordsCounts.values());
         
         for(String word : allWordsCounts.keySet())
@@ -70,7 +70,7 @@ public class TfidfExtractor implements Extractor<Article, WordVector>
             }
         }
         
-        return new WordVector(testEntity.getLabel(), features);
+        return new WordVector(article.getLabel(), features);
     }
     
     private double calculateTermFrequency(Long wordCount, Long maxWordCount)

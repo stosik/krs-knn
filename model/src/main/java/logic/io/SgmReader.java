@@ -36,7 +36,7 @@ public class SgmReader
         Files.walk(Paths.get(REUTERS_DIR))
              .filter(Files::isRegularFile)
              .map(Path::toFile)
-             .forEach(reuterFile -> entities.addAll(sgmParser.parse(reuterFile, label)));
+             .forEach(file -> entities.addAll(sgmParser.parse(file, label)));
         
         if(filters.size() > 0)
         {
