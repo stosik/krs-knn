@@ -299,11 +299,13 @@ public class MainWindowController
     {
         Distance<Base> measurer = getMeasure(similarityCombo.getValue());
         Classifier<Base> classifier = new KnnText<>(Integer.valueOf(kValue.getText()), measurer);
+        long t = System.currentTimeMillis();
         List<String> classifiedLabels = classifier.classify(trainingSet, testSet);
-        
+        t = System.currentTimeMillis() - t;
         ResultCreator resultCreator = new ResultCreator();
         ClassificationResult result = resultCreator.createResult(testSet, classifiedLabels);
         System.out.println(result + "\n");
+        System.out.println("Time: " + t / 1000 + "s");
         mainTextArea.clear();
         mainTextArea.setText(result.toString());
     }

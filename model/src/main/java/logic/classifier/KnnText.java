@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 
 public class KnnText<T extends Base> implements Classifier<T>
 {
-    private static int counter = 1;
     private final int K;
     private final Distance<T> measurer;
     
@@ -31,7 +30,6 @@ public class KnnText<T extends Base> implements Classifier<T>
         
         for(T testEntity : testSet)
         {
-            System.out.println(counter++);
             String classifiedLabel = classifyOneEntity(trainingSet, testEntity);
             classifiedLabels.add(classifiedLabel);
         }

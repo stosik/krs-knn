@@ -6,6 +6,7 @@ import logic.model.entity.WordVector;
 import logic.utils.TextUtils;
 
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +18,8 @@ public class TFIDFExtractor implements Extractor<Article, WordVector>
     
     private final int N;
     private final Map<String, Integer> dictionary = new HashMap<>();
-    private final Map<String, Integer> wordOccurencesCounts = new HashMap<>();
+    private Map<String, Integer> wordOccurencesCounts = new HashMap<>();
+    private boolean truncateDictionary = true;
     
     public TFIDFExtractor(List<Article> articles)
     {
@@ -33,12 +35,21 @@ public class TFIDFExtractor implements Extractor<Article, WordVector>
             Set<String> entityUniqueWords = TextUtils.getUniqueWords(entity);
             for(String word : entityUniqueWords)
             {
-                if(!dictionary.containsKey(word))
-                {
-                    dictionary.put(word, totalWordsCount++);
-                }
                 wordOccurencesCounts.merge(word, 1, Integer::sum);
             }
+        }
+        if(truncateDictionary)
+        {
+            wordOccurencesCounts = wordOccurencesCounts
+                .entrySet()
+                .stream()
+                .sorted(Comparator.comparing(Map.Entry<String, Integer>::getValue).reversed())
+                .limit((int) (wordOccurencesCounts.size() * 0.01))
+                .collect(Collectors.toMap((entry) -> (entry.getKey()), (entry) -> (entry.getValue())));
+        }
+        for(Map.Entry<String, Integer> entry : wordOccurencesCounts.entrySet())
+        {
+            dictionary.put(entry.getKey(), totalWordsCount++);
         }
     }
     
