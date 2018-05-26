@@ -27,6 +27,11 @@ public class TFIDFExtractor implements Extractor<Article, WordVector>
         N = articles.size();
     }
     
+    private static String apply(Map.Entry<String, Integer> entry)
+    {
+        return (entry.getKey());
+    }
+    
     private void fillDictionary(List<Article> articles)
     {
         Integer totalWordsCount = 0;
@@ -40,13 +45,16 @@ public class TFIDFExtractor implements Extractor<Article, WordVector>
         }
         if(truncateDictionary)
         {
+            System.out.println(wordOccurencesCounts.size());
             wordOccurencesCounts = wordOccurencesCounts
                 .entrySet()
                 .stream()
                 .sorted(Comparator.comparing(Map.Entry<String, Integer>::getValue).reversed())
                 .limit((int) (wordOccurencesCounts.size() * 0.01))
-                .collect(Collectors.toMap((entry) -> (entry.getKey()), (entry) -> (entry.getValue())));
+                .collect(Collectors.toMap(Map.Entry::getKey, Map.Entry::getValue));
         }
+        System.out.println(wordOccurencesCounts.size());
+    
         for(Map.Entry<String, Integer> entry : wordOccurencesCounts.entrySet())
         {
             dictionary.put(entry.getKey(), totalWordsCount++);
